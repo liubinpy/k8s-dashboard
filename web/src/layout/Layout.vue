@@ -84,6 +84,14 @@
 
         <!-- main -->
         <a-layout style="padding: 0 24px">
+          <!-- 面包屑 -->
+            <a-breadcrumb style="margin: 12px 0">
+              <a-breadcrumb-item>工作台</a-breadcrumb-item>
+              <template v-for="(matched, index) in router.currentRoute.value.matched" :key="index">
+                <a-breadcrumb-item>{{ matched.name }}</a-breadcrumb-item>
+              </template>
+            </a-breadcrumb>
+
             <a-layout-content :style="{
                 background: 'rgb(31, 30, 30)',
                 margin: 0,
