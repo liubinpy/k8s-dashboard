@@ -9,16 +9,16 @@ import (
 	"server/internal/types"
 )
 
-func ServerHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetPodListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.Request
+		var req types.GetPodListRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewServerLogic(r.Context(), svcCtx)
-		resp, err := l.Server(&req)
+		l := logic.NewGetPodListLogic(r.Context(), svcCtx)
+		resp, err := l.GetPodList(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

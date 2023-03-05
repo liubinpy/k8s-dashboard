@@ -14,9 +14,15 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/from/:name",
-				Handler: ServerHandler(serverCtx),
+				Path:    "/pods",
+				Handler: GetPodListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/services",
+				Handler: GetServiceistHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/api/k8s"),
 	)
 }

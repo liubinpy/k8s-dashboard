@@ -1,12 +1,56 @@
-type Request {
-	Name string `path:"name,options=you|me"`
+// pod 开始
+type GetPodListRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
 }
 
-type Response {
-	Message string `json:"message"`
+type GetPodListResponse {
+	Code string `json:"message"`
+	Data Pods   `json:"data"`
 }
 
+type Pods {
+	Total   int         `json:"total"`
+	PodList interface{} `json:"podList"`
+}
+// pod 结束
+
+// service 开始
+type GetServiceistRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetServiceistResponse {
+	Code string   `json:"message"`
+	Data Services `json:"data"`
+}
+
+type Services {
+	Total       int         `json:"total"`
+	ServiceList interface{} `json:"serviceList"`
+}
+// service 结束
+
+@server(
+	prefix: /api/k8s
+)
 service server-api {
-	@handler ServerHandler
-	get /from/:name(Request) returns (Response)
+	//----pod相关接口开始-----//
+	@doc "获取pod的列表"
+	@handler GetPodList
+	get /pods (GetPodListRequest) returns (GetPodListResponse)
+	//----pod相关接口结束-----//
+	
+	//----service相关接口开始-----//
+	@doc "获取service的列表"
+	@handler GetServiceist
+	get /services (GetServiceistRequest) returns (GetServiceistResponse)
+	//----service相关接口结束-----//
 }

@@ -1,3 +1,9 @@
 Name: server-api
 Host: 0.0.0.0
-Port: 8888
+Port: 8999
+
+Clusters:
+- Name: test1
+  File: /Users/bennie/.kube/config
+- Name: test2
+  File: /Users/bennie/.kube/config
