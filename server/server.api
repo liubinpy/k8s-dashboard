@@ -8,18 +8,70 @@ type GetPodListRequest {
 }
 
 type GetPodListResponse {
-	Code string `json:"message"`
-	Data Pods   `json:"data"`
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    Pods   `json:"data"`
 }
 
 type Pods {
 	Total   int         `json:"total"`
 	PodList interface{} `json:"podList"`
 }
+
+type GetPodDetailRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+type GetPodDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePodRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+type DeletePodResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdatePodRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdatePodResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type GetPodContainersRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+type GetPodContainersResponse {
+	Code       string   `json:"code"`
+	Message    string   `json:"message"`
+	Containers []string `json:"containers"`
+}
+type GetPodLogRequest {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	PodName       string `json:"podName"`
+	ContainerName string `json:"containerName"`
+}
+type GetPodLogResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Log     string `json:"log"`
+}
 // pod 结束
 
 // service 开始
-type GetServiceistRequest {
+type GetServiceListRequest {
 	Cluster    string `json:"cluster"`
 	Namespace  string `json:"namespace"`
 	FilterName string `json:"filterName"`
@@ -27,9 +79,10 @@ type GetServiceistRequest {
 	Limit      int    `json:"limit"`
 }
 
-type GetServiceistResponse {
-	Code string   `json:"message"`
-	Data Services `json:"data"`
+type GetServiceListResponse {
+	Code    string   `json:"code"`
+	Message string   `json:"message"`
+	Data    Services `json:"data"`
 }
 
 type Services {
@@ -46,11 +99,64 @@ service server-api {
 	@doc "获取pod的列表"
 	@handler GetPodList
 	get /pods (GetPodListRequest) returns (GetPodListResponse)
+	
+	@doc "获取pod的详情"
+	@handler GetPodDetail
+	get /pod/detail (GetPodDetailRequest) returns (GetPodDetailResponse)
+	
+	@doc "删除pod"
+	@handler  DeletePod
+	delete /pod/del (DeletePodRequest) returns (DeletePodResponse)
+	
+	@doc "更新pod"
+	@handler UpdatePod
+	put /pod/update (UpdatePodRequest) returns (UpdatePodResponse)
+	
+	@doc "获取pod的container的名称"
+	@handler GetPodContainers
+	get /pod/container (GetPodContainersRequest) returns (GetPodContainersResponse)
+	
+	@doc "获取pod的日志"
+	@handler GetPodLog
+	get /pod/log (GetPodLogRequest) returns (GetPodLogResponse)
 	//----pod相关接口结束-----//
 	
 	//----service相关接口开始-----//
 	@doc "获取service的列表"
-	@handler GetServiceist
-	get /services (GetServiceistRequest) returns (GetServiceistResponse)
+	@handler GetServiceList
+	get /services (GetServiceListRequest) returns (GetServiceListResponse)
 	//----service相关接口结束-----//
+	
+	//----deployment相关接口开始-----//
+    @doc "获取deployment列表"
+    @handler GetDeploymentList
+    get /deployments (GetDeploymentListRequest) returns (GetDeploymentListResponse)
+
+    @doc "获取deployment详情"
+    @handler GetDeploymentDetail
+    get /deployment/detail (GetDeploymentDetailRequest) returns (GetDeploymentDetailResponse)
+
+    @doc "删除deployment"
+    @handler DeleteDeployment
+    delete /deployment/del (DeleteDeploymentRequest) returns (DeleteDeploymentResponse)
+
+    @doc "更新deployment"
+    @handler UpdateDeployment
+    put /deployment/update (UpdateDeploymentRequest) returns (UpdateDeploymentResponse)
+
+    @doc "修改deployment副本数"
+    @handler ScaleDeployment
+    put /deployment/scale (ScaleDeploymentRequest) returns (ScaleDeploymentResponse)
+
+    @doc "重启deployment"
+    @handler RestartDeployment
+    put /deployment/restart (RestartDeploymentRequest) returns (RestartDeploymentResponse)
+
+    @doc "创建deployment"
+    @handler CreateDeployment
+    post /deployment/create (CreateDeploymentRequest) returns (CreateDeploymentResponse)
+
+	
+	//----deployment相关接口结束-----//
+	
 }

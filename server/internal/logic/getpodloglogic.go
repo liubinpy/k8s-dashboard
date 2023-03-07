@@ -4,46 +4,45 @@ import (
 	"context"
 	"server/internal/common/response"
 	"server/internal/k8sclient"
+
 	"server/internal/svc"
 	"server/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetPodListLogic struct {
+type GetPodLogLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewGetPodListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPodListLogic {
-	return &GetPodListLogic{
+func NewGetPodLogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPodLogLogic {
+	return &GetPodLogLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetPodListLogic) GetPodList(req *types.GetPodListRequest) (resp *types.GetPodListResponse, err error) {
+func (l *GetPodLogLogic) GetPodLog(req *types.GetPodLogRequest) (resp *types.GetPodLogResponse, err error) {
 	// 获取client
 	client, err := l.svcCtx.K8sClient.GetClientByClusterName(req.Cluster)
 	if err != nil {
 		logx.Errorf("获取集群client失败: %s", err)
-		return &types.GetPodListResponse{Code: response.Failed, Message: err.Error()}, nil
+		return &types.GetPodLogResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 	pod := k8sclient.Pod{}
-	total, pods, err := pod.GetPodList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	podLog, err := pod.GetPodLog(client, l.svcCtx.Config.PodLogTailLine, req.ContainerName, req.PodName, req.Namespace)
 	if err != nil {
-		return &types.GetPodListResponse{
+		return &types.GetPodLogResponse{
 			Code:    response.Failed,
 			Message: err.Error(),
 		}, nil
 	}
-	return &types.GetPodListResponse{
+
+	return &types.GetPodLogResponse{
 		Code: response.Success,
-		Data: types.Pods{
-			Total:   total,
-			PodList: pods,
-		},
+		Log:  podLog,
 	}, nil
 }

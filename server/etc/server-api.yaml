@@ -5,5 +5,7 @@ Port: 8999
 Clusters:
 - Name: test1
   File: /Users/bennie/.kube/config
+  PodLogTailLine: 5000
 - Name: test2
   File: /Users/bennie/.kube/config
+PodLogTailLine: 5000

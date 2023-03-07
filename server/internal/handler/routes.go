@@ -19,8 +19,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodGet,
+				Path:    "/pod/detail",
+				Handler: GetPodDetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/pod/del",
+				Handler: DeletePodHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/pod/update",
+				Handler: UpdatePodHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/pod/container",
+				Handler: GetPodContainersHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/pod/log",
+				Handler: GetPodLogHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
 				Path:    "/services",
-				Handler: GetServiceistHandler(serverCtx),
+				Handler: GetServiceListHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/k8s"),

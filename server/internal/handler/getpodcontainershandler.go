@@ -9,16 +9,16 @@ import (
 	"server/internal/types"
 )
 
-func GetServiceistHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetPodContainersHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.GetServiceistRequest
+		var req types.GetPodContainersRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewGetServiceistLogic(r.Context(), svcCtx)
-		resp, err := l.GetServiceist(&req)
+		l := logic.NewGetPodContainersLogic(r.Context(), svcCtx)
+		resp, err := l.GetPodContainers(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

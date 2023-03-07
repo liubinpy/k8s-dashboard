@@ -10,8 +10,9 @@ type GetPodListRequest struct {
 }
 
 type GetPodListResponse struct {
-	Code string `json:"message"`
-	Data Pods   `json:"data"`
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    Pods   `json:"data"`
 }
 
 type Pods struct {
@@ -19,7 +20,66 @@ type Pods struct {
 	PodList interface{} `json:"podList"`
 }
 
-type GetServiceistRequest struct {
+type GetPodDetailRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+
+type GetPodDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePodRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+
+type DeletePodResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdatePodRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdatePodResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetPodContainersRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PodName   string `json:"podName"`
+}
+
+type GetPodContainersResponse struct {
+	Code       string   `json:"code"`
+	Message    string   `json:"message"`
+	Containers []string `json:"containers"`
+}
+
+type GetPodLogRequest struct {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	PodName       string `json:"podName"`
+	ContainerName string `json:"containerName"`
+}
+
+type GetPodLogResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Log     string `json:"log"`
+}
+
+type GetServiceListRequest struct {
 	Cluster    string `json:"cluster"`
 	Namespace  string `json:"namespace"`
 	FilterName string `json:"filterName"`
@@ -27,9 +87,10 @@ type GetServiceistRequest struct {
 	Limit      int    `json:"limit"`
 }
 
-type GetServiceistResponse struct {
-	Code string   `json:"message"`
-	Data Services `json:"data"`
+type GetServiceListResponse struct {
+	Code    string   `json:"code"`
+	Message string   `json:"message"`
+	Data    Services `json:"data"`
 }
 
 type Services struct {
