@@ -89,13 +89,540 @@ type Services {
 	Total       int         `json:"total"`
 	ServiceList interface{} `json:"serviceList"`
 }
+
+type CreateServiceRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type CreateServiceResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetServiceDetailRequest {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	ServiceName string `json:"serviceName"`
+}
+type GetServiceDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+type DeleteServiceRequest {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	ServiceName string `json:"serviceName"`
+}
+type DeleteServiceResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateServiceRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateServiceResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
 // service 结束
+
+// deployment 开始
+type GetDeploymentListRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetDeploymentListResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    Deployments `json:"data"`
+}
+type Deployments {
+	Total          int         `json:"total"`
+	DeploymentList interface{} `json:"deploymentList"`
+}
+
+type GetDeploymentDetailRequest {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+type GetDeploymentDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteDeploymentRequest {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+type DeleteDeploymentResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateDeploymentRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateDeploymentResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type ScaleDeploymentRequest {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+	Replica        int    `json:"replica"`
+}
+type ScaleDeploymentResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type RestartDeploymentRequest {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+type RestartDeploymentResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type CreateDeploymentRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type CreateDeploymentResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+// deployment 结束
+// daemonset 开始
+type GetDaemonSetListRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetDaemonSetListResponse {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    DaemonSets `json:"data"`
+}
+
+type DaemonSets {
+	Total         int         `json:"total"`
+	DaemonSetList interface{} `json:"daemonSetList"`
+}
+
+type GetDaemonSetDetailRequest {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	DaemonSetName string `json:"daemonSetName"`
+}
+type GetDaemonSetDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+type DeleteDaemonSetRequest {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	DaemonSetName string `json:"daemonSetName"`
+}
+type DeleteDaemonSetResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateDaemonSetRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateDaemonSetResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// daemonset 结束
+
+// statefulset 开始
+type GetStatefulSetListRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetStatefulSetListResponse {
+	Code    string       `json:"code"`
+	Message string       `json:"message"`
+	Data    StatefulSets `json:"data"`
+}
+
+type StatefulSets {
+	Total           int         `json:"total"`
+	StatefulSetList interface{} `json:"statefulSetList"`
+}
+
+type GetStatefulSetDetailRequest {
+	Cluster         string `json:"cluster"`
+	Namespace       string `json:"namespace"`
+	StatefulSetName string `json:"statefulSetName"`
+}
+type GetStatefulSetDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+type DeleteStatefulSetRequest {
+	Cluster         string `json:"cluster"`
+	Namespace       string `json:"namespace"`
+	StatefulSetName string `json:"statefulSetName"`
+}
+type DeleteStatefulSetResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateStatefulSetRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateStatefulSetResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// statefulset 结束
+
+// ingress 开始
+type CreateIngressRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type CreateIngressResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetIngressListRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetIngressListResponse {
+	Code    string    `json:"code"`
+	Message string    `json:"message"`
+	Data    Ingresses `json:"data"`
+}
+type Ingresses {
+	Total       int         `json:"total"`
+	IngressList interface{} `json:"ingressList"`
+}
+
+type GetIngressDetailRequest {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	IngressName string `json:"ingressName"`
+}
+type GetIngressDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteIngressRequest {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	IngressName string `json:"ingressName"`
+}
+type DeleteIngressResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateIngressRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateIngressResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+// ingress 结束
+
+// node 开始
+type GetNodesRequest {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetNodesResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    Nodes  `json:"data"`
+}
+type Nodes {
+	Total     int         `json:"total"`
+	NodesList interface{} `json:"nodesList"`
+}
+
+type GetNodeDetailRequest {
+	Cluster  string `json:"cluster"`
+	NodeName string `json:"NodeName"`
+}
+type GetNodeDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+// node 结束
+
+// namespace 开始
+type GetNamespacesRequest {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetNamespacesResponse {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    Namespaces `json:"data"`
+}
+type Namespaces {
+	Total          int         `json:"total"`
+	NamespacesList interface{} `json:"namespacesList"`
+}
+
+type GetNamespaceDetailRequest {
+	Cluster       string `json:"cluster"`
+	NamespaceName string `json:"namespaceName"`
+}
+type GetNamespaceDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteNamespaceRequest {
+	Cluster       string `json:"cluster"`
+	NamespaceName string `json:"namespaceName"`
+}
+type DeleteNamespaceResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// namespace 结束
+
+// pv 开始
+type GetPVsRequest {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetPVsResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    PVs    `json:"data"`
+}
+type PVs {
+	Total   int         `json:"total"`
+	PVsList interface{} `json:"pvsList"`
+}
+
+type GetPVDetailRequest {
+	Cluster string `json:"cluster"`
+	PVName  string `json:"pvName"`
+}
+type GetPVDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePVRequest {
+	Cluster string `json:"cluster"`
+	PVName  string `json:"pvName"`
+}
+type DeletePVResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+// pv 结束
+
+// configmap 开始
+type GetConfigmapsRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetConfigmapsResponse {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    Configmaps `json:"data"`
+}
+type Configmaps {
+	Total         int         `json:"total"`
+	ConfigmapList interface{} `json:"configmapList"`
+}
+type GetConfigmapDetailRequest {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	ConfigmapName string `json:"configmapName"`
+}
+type GetConfigmapDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteConfigmapRequest {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	ConfigmapName string `json:"configmapName"`
+}
+type DeleteConfigmapResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateConfigmapRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateConfigmapResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// configmap 结束
+
+// secret 开始
+type GetSecretsRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetSecretsResponse {
+	Code    string  `json:"code"`
+	Message string  `json:"message"`
+	Data    Secrets `json:"data"`
+}
+type Secrets {
+	Total      int         `json:"total"`
+	SecretList interface{} `json:"secretList"`
+}
+type GetSecretDetailRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	SecretName string `json:"secretName"`
+}
+type GetSecretDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteSecretRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	SecretName string `json:"secretName"`
+}
+type DeleteSecretResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdateSecretRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdateSecretResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+// secret 结束
+
+// pvc 开始
+type GetPVCsRequest {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+type GetPVCsResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    PVCs   `json:"data"`
+}
+
+type PVCs {
+	Total    int         `json:"total"`
+	PVCsList interface{} `json:"pvCsList"`
+}
+type GetPVCDetailRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PVCName   string `json:"pvcName"`
+}
+type GetPVCDetailResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePVCRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PVCName   string `json:"pvcName"`
+}
+type DeletePVCResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+type UpdatePVCRequest {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+type UpdatePVCResponse {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+// pvc 结束
 
 @server(
 	prefix: /api/k8s
+	group: pods
 )
 service server-api {
-	//----pod相关接口开始-----//
 	@doc "获取pod的列表"
 	@handler GetPodList
 	get /pods (GetPodListRequest) returns (GetPodListResponse)
@@ -119,44 +646,253 @@ service server-api {
 	@doc "获取pod的日志"
 	@handler GetPodLog
 	get /pod/log (GetPodLogRequest) returns (GetPodLogResponse)
-	//----pod相关接口结束-----//
 	
-	//----service相关接口开始-----//
+}
+
+@server(
+	prefix: /api/k8s
+	group: services
+)
+service server-api {
+	@doc "创建service"
+	@handler CreateService
+	get /service/create (CreateServiceRequest) returns (CreateServiceResponse)
+	
 	@doc "获取service的列表"
 	@handler GetServiceList
 	get /services (GetServiceListRequest) returns (GetServiceListResponse)
-	//----service相关接口结束-----//
 	
-	//----deployment相关接口开始-----//
-    @doc "获取deployment列表"
-    @handler GetDeploymentList
-    get /deployments (GetDeploymentListRequest) returns (GetDeploymentListResponse)
-
-    @doc "获取deployment详情"
-    @handler GetDeploymentDetail
-    get /deployment/detail (GetDeploymentDetailRequest) returns (GetDeploymentDetailResponse)
-
-    @doc "删除deployment"
-    @handler DeleteDeployment
-    delete /deployment/del (DeleteDeploymentRequest) returns (DeleteDeploymentResponse)
-
-    @doc "更新deployment"
-    @handler UpdateDeployment
-    put /deployment/update (UpdateDeploymentRequest) returns (UpdateDeploymentResponse)
-
-    @doc "修改deployment副本数"
-    @handler ScaleDeployment
-    put /deployment/scale (ScaleDeploymentRequest) returns (ScaleDeploymentResponse)
-
-    @doc "重启deployment"
-    @handler RestartDeployment
-    put /deployment/restart (RestartDeploymentRequest) returns (RestartDeploymentResponse)
-
-    @doc "创建deployment"
-    @handler CreateDeployment
-    post /deployment/create (CreateDeploymentRequest) returns (CreateDeploymentResponse)
-
+	@doc "获取service详情"
+	@handler GetServiceDetail
+	get /service/detail (GetServiceDetailRequest) returns (GetServiceDetailResponse)
 	
-	//----deployment相关接口结束-----//
+	@doc "删除service"
+	@handler DeleteService
+	delete /service/del (DeleteServiceRequest) returns (DeleteServiceResponse)
 	
+	@doc "更新service"
+	@handler UpdateService
+	put /service/update (UpdateServiceRequest) returns (UpdateServiceResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: deployments
+)
+service server-api {
+	@doc "获取deployment列表"
+	@handler GetDeploymentList
+	get /deployments (GetDeploymentListRequest) returns (GetDeploymentListResponse)
+	
+	@doc "获取deployment详情"
+	@handler GetDeploymentDetail
+	get /deployment/detail (GetDeploymentDetailRequest) returns (GetDeploymentDetailResponse)
+	
+	@doc "删除deployment"
+	@handler DeleteDeployment
+	delete /deployment/del (DeleteDeploymentRequest) returns (DeleteDeploymentResponse)
+	
+	@doc "更新deployment"
+	@handler UpdateDeployment
+	put /deployment/update (UpdateDeploymentRequest) returns (UpdateDeploymentResponse)
+	
+	@doc "修改deployment副本数"
+	@handler ScaleDeployment
+	put /deployment/scale (ScaleDeploymentRequest) returns (ScaleDeploymentResponse)
+	
+	@doc "重启deployment"
+	@handler RestartDeployment
+	put /deployment/restart (RestartDeploymentRequest) returns (RestartDeploymentResponse)
+	
+	@doc "创建deployment"
+	@handler CreateDeployment
+	post /deployment/create (CreateDeploymentRequest) returns (CreateDeploymentResponse)
+}
+
+@server(
+	prefix: /api/k8s
+	group: daemonSets
+)
+service server-api {
+	@doc "获取daemonset列表"
+	@handler GetDaemonSetList
+	get /daemonsets (GetDaemonSetListRequest) returns (GetDaemonSetListResponse)
+	
+	@doc "获取daemonset详情"
+	@handler GetDaemonSetDetail
+	get /daemonset/detail (GetDaemonSetDetailRequest) returns (GetDaemonSetDetailResponse)
+	
+	@doc "删除daemonset"
+	@handler DeleteDaemonSet
+	delete /daemonset/delete (DeleteDaemonSetRequest) returns (DeleteDaemonSetResponse)
+	
+	@doc "更新daemonset"
+	@handler UpdateDaemonSet
+	put /daemonset/update (UpdateDaemonSetRequest) returns (UpdateDaemonSetResponse)
+	
+}
+
+@server(
+	prefix: /api/k8s
+	group: statefulSets
+)
+service server-api {
+	@doc "获取statefulset列表"
+	@handler GetStatefulSetList
+	get /statefulsets (GetStatefulSetListRequest) returns (GetStatefulSetListResponse)
+	
+	@doc "获取statefulset详情"
+	@handler GetStatefulSetDetail
+	get /statefulset/detail (GetStatefulSetDetailRequest) returns (GetStatefulSetDetailResponse)
+	
+	@doc "删除statefulset"
+	@handler DeleteStatefulSet
+	delete /statefulset/delete (DeleteStatefulSetRequest) returns (DeleteStatefulSetResponse)
+	
+	@doc "更新statefulset"
+	@handler UpdateStatefulSet
+	put /statefulset/update (UpdateStatefulSetRequest) returns (UpdateStatefulSetResponse)
+	
+}
+
+@server(
+	prefix: /api/k8s
+	group: ingresses
+)
+service server-api {
+	@doc "创建ingress"
+	@handler CreateIngress
+	post /ingress/create (CreateIngressRequest) returns (CreateIngressResponse)
+	
+	@doc "获取ingress列表"
+	@handler GetIngressList
+	get /ingresses (GetIngressListRequest) returns (GetIngressListResponse)
+	
+	@doc "获取ingress详情"
+	@handler GetIngressDetail
+	get /ingress/detail (GetIngressDetailRequest) returns (GetIngressDetailResponse)
+	
+	@doc "删除ingress"
+	@handler DeleteIngress
+	delete /ingress/delete (DeleteIngressRequest) returns (DeleteIngressResponse)
+	
+	@doc "更新ingress"
+	@handler UpdateIngress
+	put /ingress/update (UpdateIngressRequest) returns (UpdateIngressResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: nodes
+)
+service server-api {
+	@doc "获取node列表"
+	@handler GetNodes
+	get /nodes (GetNodesRequest) returns (GetNodesResponse)
+	
+	@doc "获取node详情"
+	@handler GetNodeDetail
+	get /node/detail (GetNodeDetailRequest) returns (GetNodeDetailResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: namespaces
+)
+service server-api {
+	@doc "获取namespace列表"
+	@handler GetNamespaces
+	get /namespaces (GetNamespacesRequest) returns (GetNamespacesResponse)
+	
+	@doc "获取namespace详情"
+	@handler GetNamespaceDetail
+	get /namespace/detail (GetNamespaceDetailRequest) returns (GetNamespaceDetailResponse)
+	
+	@doc "删除namespace"
+	@handler DeleteNamespace
+	delete /namespace/del (DeleteNamespaceRequest) returns (DeleteNamespaceResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: pvs
+)
+service server-api {
+	@doc "获取pv列表"
+	@handler GetPVs
+	get /pvs (GetPVsRequest) returns (GetPVsResponse)
+	
+	@doc "获取pv详情"
+	@handler GetPVDetail
+	get /pv/detail (GetPVDetailRequest) returns (GetPVDetailResponse)
+	
+	@doc "删除pv"
+	@handler DeletePV
+	delete /pv/del (DeletePVRequest) returns (DeletePVResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: configmaps
+)
+service server-api {
+	@doc "获取configmap列表"
+	@handler GetConfigmaps
+	get /configmaps (GetConfigmapsRequest) returns (GetConfigmapsResponse)
+	
+	@doc "获取configmap详情"
+	@handler GetConfigmapDetail
+	get /configmap/detail (GetConfigmapDetailRequest) returns (GetConfigmapDetailResponse)
+	
+	@doc "删除configmap"
+	@handler DeleteConfigmap
+	delete /configmap/del (DeleteConfigmapRequest) returns (DeleteConfigmapResponse)
+	
+	@doc "修改configmap"
+	@handler UpdateConfigmap
+	put /configmap/update (UpdateConfigmapRequest) returns (UpdateConfigmapResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: secrets
+)
+service server-api {
+	@doc "获取secret列表"
+	@handler GetSecrets
+	get /secrets (GetSecretsRequest) returns (GetSecretsResponse)
+	
+	@doc "获取secret详情"
+	@handler GetSecretDetail
+	get /secret/detail (GetSecretDetailRequest) returns (GetSecretDetailResponse)
+	
+	@doc "删除secret"
+	@handler DeleteSecret
+	delete /secret/del (DeleteSecretRequest) returns (DeleteSecretResponse)
+	
+	@doc "修改secret"
+	@handler UpdateSecret
+	put /secret/update (UpdateSecretRequest) returns (UpdateSecretResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: pvcs
+)
+service server-api {
+	@doc "获取pvc列表"
+	@handler GetPVCs
+	get /pvcs (GetPVCsRequest) returns (GetPVCsResponse)
+	
+	@doc "获取pvc详情"
+	@handler GetPVCDetail
+	get /pvc/detail (GetPVCDetailRequest) returns (GetPVCDetailResponse)
+	
+	@doc "删除pvc"
+	@handler DeletePVC
+	delete /pvc/del (DeletePVCRequest) returns (DeletePVCResponse)
+	
+	@doc "修改pvc"
+	@handler UpdatePVC
+	put /pvc/update (UpdatePVCRequest) returns (UpdatePVCResponse)
 }

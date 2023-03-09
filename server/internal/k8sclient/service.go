@@ -6,6 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -29,7 +30,7 @@ func (s *Service) fromCells(cells []DataCell) []corev1.Service {
 	return services
 }
 
-// GetServiceList 获取pod列表
+// GetServiceList 获取service列表
 func (s *Service) GetServiceList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, services []corev1.Service, err error) {
 	serviceList, err := client.CoreV1().Services(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
@@ -57,4 +58,59 @@ func (s *Service) GetServiceList(client *kubernetes.Clientset, filterName, names
 	services = s.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, services, nil
+}
+
+// CreateService 创建service
+func (s *Service) CreateService(client *kubernetes.Clientset, namespace, content string) (err error) {
+	newService := &corev1.Service{}
+	err = json.Unmarshal([]byte(content), newService)
+	if err != nil {
+		logx.Errorf("序列化service失败:%s", err.Error())
+		return errors.New("序列化service失败")
+	}
+
+	_, err = client.CoreV1().Services(namespace).Create(context.TODO(), newService, metav1.CreateOptions{})
+	if err != nil {
+		logx.Errorf("创建service失败:%s", err.Error())
+		return errors.New("创建service失败")
+	}
+	return nil
+}
+
+// GetServiceDetail 获取service详情
+func (s *Service) GetServiceDetail(client *kubernetes.Clientset, namespace, serviceName string) (service *corev1.Service, err error) {
+	service, err = client.CoreV1().Services(namespace).Get(context.TODO(), serviceName, metav1.GetOptions{})
+	if err != nil {
+		logx.Errorf("获取service失败:%s", err.Error())
+		return nil, errors.New("获取service失败")
+	}
+
+	return service, nil
+}
+
+// DeleteService 删除service
+func (s *Service) DeleteService(client *kubernetes.Clientset, namespace, serviceName string) (err error) {
+	err = client.CoreV1().Services(namespace).Delete(context.TODO(), serviceName, metav1.DeleteOptions{})
+	if err != nil {
+		logx.Errorf("删除service失败:%s", err.Error())
+		return errors.New("删除service失败")
+	}
+	return nil
+}
+
+// UpdateService 更新service
+func (s *Service) UpdateService(client *kubernetes.Clientset, namespace, content string) (err error) {
+	newService := &corev1.Service{}
+	err = json.Unmarshal([]byte(content), newService)
+	if err != nil {
+		logx.Errorf("序列化service失败:%s", err.Error())
+		return errors.New("序列化service失败")
+	}
+
+	_, err = client.CoreV1().Services(namespace).Update(context.TODO(), newService, metav1.UpdateOptions{})
+	if err != nil {
+		logx.Errorf("更新service失败:%s", err.Error())
+		return errors.New("更新service失败")
+	}
+	return nil
 }

@@ -2,6 +2,7 @@ package k8sclient
 
 import (
 	"context"
+	"errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -56,4 +57,25 @@ func (n *Namespace) GetNamespaceList(client *kubernetes.Clientset, filterName st
 	namespaces = n.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, namespaces, nil
+}
+
+// GetNamespaceDetail 获取namespace详情
+func (n *Namespace) GetNamespaceDetail(client *kubernetes.Clientset, namespaceName string) (namespace *corev1.Namespace, err error) {
+	namespace, err = client.CoreV1().Namespaces().Get(context.TODO(), namespaceName, metav1.GetOptions{})
+
+	if err != nil {
+		logx.Errorf("获取namespace详情失败%s", err.Error())
+		return nil, errors.New("获取namespace详情失败")
+	}
+	return namespace, nil
+}
+
+// DeleteNamespace 删除namespace
+func (n *Namespace) DeleteNamespace(client *kubernetes.Clientset, namespaceName string) (err error) {
+	err = client.CoreV1().Namespaces().Delete(context.TODO(), namespaceName, metav1.DeleteOptions{})
+	if err != nil {
+		logx.Errorf("删除namespace失败:%s", err.Error())
+		return errors.New("删除namespace失败")
+	}
+	return nil
 }

@@ -97,3 +97,571 @@ type Services struct {
 	Total       int         `json:"total"`
 	ServiceList interface{} `json:"serviceList"`
 }
+
+type CreateServiceRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type CreateServiceResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetServiceDetailRequest struct {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	ServiceName string `json:"serviceName"`
+}
+
+type GetServiceDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteServiceRequest struct {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	ServiceName string `json:"serviceName"`
+}
+
+type DeleteServiceResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateServiceRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateServiceResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetDeploymentListRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetDeploymentListResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    Deployments `json:"data"`
+}
+
+type Deployments struct {
+	Total          int         `json:"total"`
+	DeploymentList interface{} `json:"deploymentList"`
+}
+
+type GetDeploymentDetailRequest struct {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+
+type GetDeploymentDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteDeploymentRequest struct {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+
+type DeleteDeploymentResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateDeploymentRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateDeploymentResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type ScaleDeploymentRequest struct {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+	Replica        int    `json:"replica"`
+}
+
+type ScaleDeploymentResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type RestartDeploymentRequest struct {
+	Cluster        string `json:"cluster"`
+	Namespace      string `json:"namespace"`
+	DeploymentName string `json:"deploymentName"`
+}
+
+type RestartDeploymentResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type CreateDeploymentRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type CreateDeploymentResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetDaemonSetListRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetDaemonSetListResponse struct {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    DaemonSets `json:"data"`
+}
+
+type DaemonSets struct {
+	Total         int         `json:"total"`
+	DaemonSetList interface{} `json:"daemonSetList"`
+}
+
+type GetDaemonSetDetailRequest struct {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	DaemonSetName string `json:"daemonSetName"`
+}
+
+type GetDaemonSetDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteDaemonSetRequest struct {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	DaemonSetName string `json:"daemonSetName"`
+}
+
+type DeleteDaemonSetResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateDaemonSetRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateDaemonSetResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetStatefulSetListRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetStatefulSetListResponse struct {
+	Code    string       `json:"code"`
+	Message string       `json:"message"`
+	Data    StatefulSets `json:"data"`
+}
+
+type StatefulSets struct {
+	Total           int         `json:"total"`
+	StatefulSetList interface{} `json:"statefulSetList"`
+}
+
+type GetStatefulSetDetailRequest struct {
+	Cluster         string `json:"cluster"`
+	Namespace       string `json:"namespace"`
+	StatefulSetName string `json:"statefulSetName"`
+}
+
+type GetStatefulSetDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteStatefulSetRequest struct {
+	Cluster         string `json:"cluster"`
+	Namespace       string `json:"namespace"`
+	StatefulSetName string `json:"statefulSetName"`
+}
+
+type DeleteStatefulSetResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateStatefulSetRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateStatefulSetResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type CreateIngressRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type CreateIngressResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetIngressListRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetIngressListResponse struct {
+	Code    string    `json:"code"`
+	Message string    `json:"message"`
+	Data    Ingresses `json:"data"`
+}
+
+type Ingresses struct {
+	Total       int         `json:"total"`
+	IngressList interface{} `json:"ingressList"`
+}
+
+type GetIngressDetailRequest struct {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	IngressName string `json:"ingressName"`
+}
+
+type GetIngressDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteIngressRequest struct {
+	Cluster     string `json:"cluster"`
+	Namespace   string `json:"namespace"`
+	IngressName string `json:"ingressName"`
+}
+
+type DeleteIngressResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateIngressRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateIngressResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetNodesRequest struct {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetNodesResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    Nodes  `json:"data"`
+}
+
+type Nodes struct {
+	Total     int         `json:"total"`
+	NodesList interface{} `json:"nodesList"`
+}
+
+type GetNodeDetailRequest struct {
+	Cluster  string `json:"cluster"`
+	NodeName string `json:"NodeName"`
+}
+
+type GetNodeDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type GetNamespacesRequest struct {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetNamespacesResponse struct {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    Namespaces `json:"data"`
+}
+
+type Namespaces struct {
+	Total          int         `json:"total"`
+	NamespacesList interface{} `json:"namespacesList"`
+}
+
+type GetNamespaceDetailRequest struct {
+	Cluster       string `json:"cluster"`
+	NamespaceName string `json:"namespaceName"`
+}
+
+type GetNamespaceDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteNamespaceRequest struct {
+	Cluster       string `json:"cluster"`
+	NamespaceName string `json:"namespaceName"`
+}
+
+type DeleteNamespaceResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetPVsRequest struct {
+	Cluster    string `json:"cluster"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetPVsResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    PVs    `json:"data"`
+}
+
+type PVs struct {
+	Total   int         `json:"total"`
+	PVsList interface{} `json:"pvsList"`
+}
+
+type GetPVDetailRequest struct {
+	Cluster string `json:"cluster"`
+	PVName  string `json:"pvName"`
+}
+
+type GetPVDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePVRequest struct {
+	Cluster string `json:"cluster"`
+	PVName  string `json:"pvName"`
+}
+
+type DeletePVResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetConfigmapsRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetConfigmapsResponse struct {
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    Configmaps `json:"data"`
+}
+
+type Configmaps struct {
+	Total         int         `json:"total"`
+	ConfigmapList interface{} `json:"configmapList"`
+}
+
+type GetConfigmapDetailRequest struct {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	ConfigmapName string `json:"configmapName"`
+}
+
+type GetConfigmapDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteConfigmapRequest struct {
+	Cluster       string `json:"cluster"`
+	Namespace     string `json:"namespace"`
+	ConfigmapName string `json:"configmapName"`
+}
+
+type DeleteConfigmapResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateConfigmapRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateConfigmapResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetSecretsRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetSecretsResponse struct {
+	Code    string  `json:"code"`
+	Message string  `json:"message"`
+	Data    Secrets `json:"data"`
+}
+
+type Secrets struct {
+	Total      int         `json:"total"`
+	SecretList interface{} `json:"secretList"`
+}
+
+type GetSecretDetailRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	SecretName string `json:"secretName"`
+}
+
+type GetSecretDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeleteSecretRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	SecretName string `json:"secretName"`
+}
+
+type DeleteSecretResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateSecretRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdateSecretResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type GetPVCsRequest struct {
+	Cluster    string `json:"cluster"`
+	Namespace  string `json:"namespace"`
+	FilterName string `json:"filterName"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}
+
+type GetPVCsResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    PVCs   `json:"data"`
+}
+
+type PVCs struct {
+	Total    int         `json:"total"`
+	PVCsList interface{} `json:"pvCsList"`
+}
+
+type GetPVCDetailRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PVCName   string `json:"pvcName"`
+}
+
+type GetPVCDetailResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type DeletePVCRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	PVCName   string `json:"pvcName"`
+}
+
+type DeletePVCResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdatePVCRequest struct {
+	Cluster   string `json:"cluster"`
+	Namespace string `json:"namespace"`
+	Content   string `json:"content"`
+}
+
+type UpdatePVCResponse struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}

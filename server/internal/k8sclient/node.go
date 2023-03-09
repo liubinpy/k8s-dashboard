@@ -2,6 +2,7 @@ package k8sclient
 
 import (
 	"context"
+	"errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -56,4 +57,15 @@ func (n *Node) GetNodeList(client *kubernetes.Clientset, filterName string, limi
 	nodes = n.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, nodes, nil
+}
+
+// GetNodeDetail 获取Node详情
+func (n *Node) GetNodeDetail(client *kubernetes.Clientset, nodeName string) (node *corev1.Node, err error) {
+	node, err = client.CoreV1().Nodes().Get(context.TODO(), nodeName, metav1.GetOptions{})
+
+	if err != nil {
+		logx.Errorf("获取Node详情失败%s", err.Error())
+		return nil, errors.New("获取Node详情失败")
+	}
+	return node, nil
 }
