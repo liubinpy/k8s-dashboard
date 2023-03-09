@@ -6,6 +6,10 @@ type Config struct {
 	rest.RestConf
 	Clusters       []*Cluster
 	PodLogTailLine int `json:"PodLogTailLine"`
+	// Mysql配置
+	Mysql struct {
+		Datasource string
+	}
 }
 
 type Cluster struct {
