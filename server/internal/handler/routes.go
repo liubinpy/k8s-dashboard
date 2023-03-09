@@ -7,6 +7,7 @@ import (
 	configmaps "server/internal/handler/configmaps"
 	daemonSets "server/internal/handler/daemonSets"
 	deployments "server/internal/handler/deployments"
+	events "server/internal/handler/events"
 	ingresses "server/internal/handler/ingresses"
 	namespaces "server/internal/handler/namespaces"
 	nodes "server/internal/handler/nodes"
@@ -344,6 +345,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPut,
 				Path:    "/pvc/update",
 				Handler: pvcs.UpdatePVCHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api/k8s"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/events",
+				Handler: events.GetEventsHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api/k8s"),

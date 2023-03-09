@@ -618,6 +618,20 @@ type UpdatePVCResponse {
 
 // pvc 结束
 
+// event 开始
+type GetEventsRequest {
+	Cluster string `json:"cluster"`
+	Page    int    `json:"page"`
+	Limit   int    `json:"limit"`
+}
+type GetEventsResponse {
+	Code    string      `json:"code"`
+	Message string      `json:"message,omitempty"`
+	Total   int         `json:"total"`
+	Data    interface{} `json:"data"`
+}
+// event 结束
+
 @server(
 	prefix: /api/k8s
 	group: pods
@@ -895,4 +909,14 @@ service server-api {
 	@doc "修改pvc"
 	@handler UpdatePVC
 	put /pvc/update (UpdatePVCRequest) returns (UpdatePVCResponse)
+}
+
+@server (
+	prefix: /api/k8s
+	group: events
+)
+service server-api {
+	@doc "获取event列表"
+	@handler GetEvents
+	get /events (GetEventsRequest) returns (GetEventsResponse)
 }

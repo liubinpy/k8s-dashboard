@@ -665,3 +665,16 @@ type UpdatePVCResponse struct {
 	Code    string `json:"code"`
 	Message string `json:"message,omitempty"`
 }
+
+type GetEventsRequest struct {
+	Cluster string `json:"cluster"`
+	Page    int    `json:"page"`
+	Limit   int    `json:"limit"`
+}
+
+type GetEventsResponse struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message,omitempty"`
+	Total   int         `json:"total"`
+	Data    interface{} `json:"data"`
+}

@@ -18,8 +18,8 @@ import (
 var (
 	eventFieldNames          = builder.RawFieldNames(&Event{})
 	eventRows                = strings.Join(eventFieldNames, ",")
-	eventRowsExpectAutoSet   = strings.Join(stringx.Remove(eventFieldNames, "`id`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`", "`created_at`"), ",")
-	eventRowsWithPlaceHolder = strings.Join(stringx.Remove(eventFieldNames, "`id`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`", "`created_at`"), "=?,") + "=?"
+	eventRowsExpectAutoSet   = strings.Join(stringx.Remove(eventFieldNames, "`id`", "`create_at`", "`created_at`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`"), ",")
+	eventRowsWithPlaceHolder = strings.Join(stringx.Remove(eventFieldNames, "`id`", "`create_at`", "`created_at`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`"), "=?,") + "=?"
 )
 
 type (
@@ -45,6 +45,7 @@ type (
 		EventTime  time.Time `db:"eventTime"`   // 时间
 		Cluster    string    `db:"cluster"`     // 集群名称
 		CreateTime time.Time `db:"create_time"` // 创建时间
+		Name       string    `db:"name"`
 	}
 )
 
@@ -76,14 +77,14 @@ func (m *defaultEventModel) FindOne(ctx context.Context, id int64) (*Event, erro
 }
 
 func (m *defaultEventModel) Insert(ctx context.Context, data *Event) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, eventRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Kind, data.Namespace, data.Rtype, data.Reason, data.Message, data.EventTime, data.Cluster)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?)", m.table, eventRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Kind, data.Namespace, data.Rtype, data.Reason, data.Message, data.EventTime, data.Cluster, data.Name)
 	return ret, err
 }
 
 func (m *defaultEventModel) Update(ctx context.Context, data *Event) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, eventRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Kind, data.Namespace, data.Rtype, data.Reason, data.Message, data.EventTime, data.Cluster, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.Kind, data.Namespace, data.Rtype, data.Reason, data.Message, data.EventTime, data.Cluster, data.Name, data.Id)
 	return err
 }
 
