@@ -31,9 +31,8 @@ func (l *GetConfigmapsLogic) GetConfigmaps(req *types.GetConfigmapsRequest) (res
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetConfigmapsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	configmap := k8sclient.Configmap{}
 
-	total, configmaps, err := configmap.GetConfigmapList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, configmaps, err := k8sclient.ConfigmapClient.GetConfigmapList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetConfigmapsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

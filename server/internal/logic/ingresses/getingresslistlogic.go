@@ -31,8 +31,7 @@ func (l *GetIngressListLogic) GetIngressList(req *types.GetIngressListRequest) (
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetIngressListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	ingress := k8sclient.Ingresses{}
-	total, ingresses, err := ingress.GetIngressesList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, ingresses, err := k8sclient.IngressClient.GetIngressesList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetIngressListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

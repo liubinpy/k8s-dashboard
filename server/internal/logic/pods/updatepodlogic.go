@@ -32,8 +32,7 @@ func (l *UpdatePodLogic) UpdatePod(req *types.UpdatePodRequest) (resp *types.Upd
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdatePodResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pod := k8sclient.Pod{}
-	err = pod.UpdatePod(client, req.Namespace, req.Content)
+	err = k8sclient.PodClient.UpdatePod(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdatePodResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

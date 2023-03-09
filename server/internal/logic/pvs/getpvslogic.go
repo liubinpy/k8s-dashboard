@@ -31,8 +31,7 @@ func (l *GetPVsLogic) GetPVs(req *types.GetPVsRequest) (resp *types.GetPVsRespon
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPVsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pv := k8sclient.PV{}
-	total, pvs, err := pv.GetPVList(client, req.FilterName, req.Limit, req.Page)
+	total, pvs, err := k8sclient.PVClient.GetPVList(client, req.FilterName, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetPVsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -34,8 +34,7 @@ func (l *CreateDeploymentLogic) CreateDeployment(req *types.CreateDeploymentRequ
 	}
 
 	// 创建deployment
-	deployment := k8sclient.Deployment{}
-	err = deployment.CreateDeployment(client, req.Namespace, req.Content)
+	err = k8sclient.DeploymentClient.CreateDeployment(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.CreateDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -31,8 +31,7 @@ func (l *GetSecretDetailLogic) GetSecretDetail(req *types.GetSecretDetailRequest
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetSecretDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	secret := k8sclient.Secret{}
-	secretDetail, err := secret.GetSecretDetail(client, req.Namespace, req.SecretName)
+	secretDetail, err := k8sclient.SecretClient.GetSecretDetail(client, req.Namespace, req.SecretName)
 	if err != nil {
 		return &types.GetSecretDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

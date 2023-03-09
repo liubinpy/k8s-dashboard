@@ -32,8 +32,7 @@ func (l *UpdateSecretLogic) UpdateSecret(req *types.UpdateSecretRequest) (resp *
 		return &types.UpdateSecretResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	secret := k8sclient.Secret{}
-	err = secret.UpdateSecret(client, req.Namespace, req.Content)
+	err = k8sclient.SecretClient.UpdateSecret(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateSecretResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

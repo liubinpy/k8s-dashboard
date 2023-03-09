@@ -31,9 +31,8 @@ func (l *GetIngressDetailLogic) GetIngressDetail(req *types.GetIngressDetailRequ
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetIngressDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	ingress := k8sclient.Ingresses{}
 
-	detail, err := ingress.GetIngressDetail(client, req.IngressName, req.Namespace)
+	detail, err := k8sclient.IngressClient.GetIngressDetail(client, req.IngressName, req.Namespace)
 	if err != nil {
 		return &types.GetIngressDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

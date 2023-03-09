@@ -32,9 +32,7 @@ func (l *DeletePVLogic) DeletePV(req *types.DeletePVRequest) (resp *types.Delete
 		return &types.DeletePVResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	pv := k8sclient.PV{}
-
-	err = pv.DeletePV(client, req.PVName)
+	err = k8sclient.PVClient.DeletePV(client, req.PVName)
 	if err != nil {
 		return &types.DeletePVResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

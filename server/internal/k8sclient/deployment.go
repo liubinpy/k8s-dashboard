@@ -14,10 +14,12 @@ import (
 	"time"
 )
 
-type Deployment struct {
+var DeploymentClient deployment
+
+type deployment struct {
 }
 
-func (d *Deployment) toCells(std []appsv1.Deployment) []DataCell {
+func (d *deployment) toCells(std []appsv1.Deployment) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = deploymentCell(std[i])
@@ -25,7 +27,7 @@ func (d *Deployment) toCells(std []appsv1.Deployment) []DataCell {
 	return cells
 }
 
-func (d *Deployment) fromCells(cells []DataCell) []appsv1.Deployment {
+func (d *deployment) fromCells(cells []DataCell) []appsv1.Deployment {
 	deployments := make([]appsv1.Deployment, len(cells))
 	for i := range cells {
 		deployments[i] = appsv1.Deployment(cells[i].(deploymentCell))
@@ -34,7 +36,7 @@ func (d *Deployment) fromCells(cells []DataCell) []appsv1.Deployment {
 }
 
 // GetDeploymentList 获取deployment列表
-func (d *Deployment) GetDeploymentList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, deployments []appsv1.Deployment, err error) {
+func (d *deployment) GetDeploymentList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, deployments []appsv1.Deployment, err error) {
 	deploymentList, err := client.AppsV1().Deployments(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取deployment列表失败, %s", err.Error())
@@ -64,7 +66,7 @@ func (d *Deployment) GetDeploymentList(client *kubernetes.Clientset, filterName,
 }
 
 // GetDeploymentDetail 获取deployment详情
-func (d *Deployment) GetDeploymentDetail(client *kubernetes.Clientset, deploymentName, namespace string) (deployment *appsv1.Deployment, err error) {
+func (d *deployment) GetDeploymentDetail(client *kubernetes.Clientset, deploymentName, namespace string) (deployment *appsv1.Deployment, err error) {
 	deployment, err = client.AppsV1().Deployments(namespace).Get(context.TODO(), deploymentName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取deployment详情失败%s", err.Error())
@@ -74,7 +76,7 @@ func (d *Deployment) GetDeploymentDetail(client *kubernetes.Clientset, deploymen
 }
 
 // DeleteDeployment 删除deployment
-func (d *Deployment) DeleteDeployment(client *kubernetes.Clientset, deploymentName, namespace string) (err error) {
+func (d *deployment) DeleteDeployment(client *kubernetes.Clientset, deploymentName, namespace string) (err error) {
 	err = client.AppsV1().Deployments(namespace).Delete(context.TODO(), deploymentName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除deployment失败%s", err.Error())
@@ -84,7 +86,7 @@ func (d *Deployment) DeleteDeployment(client *kubernetes.Clientset, deploymentNa
 }
 
 // UpdateDeployment 更新deployment
-func (d *Deployment) UpdateDeployment(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (d *deployment) UpdateDeployment(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newDeployment := new(appsv1.Deployment)
 	err = json.Unmarshal([]byte(content), newDeployment)
 	if err != nil {
@@ -100,7 +102,7 @@ func (d *Deployment) UpdateDeployment(client *kubernetes.Clientset, namespace, c
 }
 
 // ScaleDeployment 修改deployment副本数
-func (d *Deployment) ScaleDeployment(client *kubernetes.Clientset, deploymentName, namespace string, replica int) (err error) {
+func (d *deployment) ScaleDeployment(client *kubernetes.Clientset, deploymentName, namespace string, replica int) (err error) {
 	scale := &autoscalingv1.Scale{
 		Spec: autoscalingv1.ScaleSpec{Replicas: int32(replica)},
 	}
@@ -113,7 +115,7 @@ func (d *Deployment) ScaleDeployment(client *kubernetes.Clientset, deploymentNam
 }
 
 // RestartDeployment 重启deployment
-func (d *Deployment) RestartDeployment(client *kubernetes.Clientset, deploymentName, namespace string) (err error) {
+func (d *deployment) RestartDeployment(client *kubernetes.Clientset, deploymentName, namespace string) (err error) {
 	data := fmt.Sprintf(`{"spec": {"template": {"metadata": {"annotations": {"kubectl.kubernetes.io/restartedAt": "%s"}}}}}`, time.Now().Format("20060102150405"))
 	_, err = client.AppsV1().Deployments(namespace).Patch(context.TODO(), deploymentName, types.StrategicMergePatchType, []byte(data), metav1.PatchOptions{})
 	if err != nil {
@@ -124,7 +126,7 @@ func (d *Deployment) RestartDeployment(client *kubernetes.Clientset, deploymentN
 }
 
 // CreateDeployment 创建deployment
-func (d *Deployment) CreateDeployment(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (d *deployment) CreateDeployment(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newDeployment := new(appsv1.Deployment)
 	err = json.Unmarshal([]byte(content), newDeployment)
 	if err != nil {

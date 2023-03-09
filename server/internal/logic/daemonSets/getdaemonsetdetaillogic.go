@@ -31,8 +31,7 @@ func (l *GetDaemonSetDetailLogic) GetDaemonSetDetail(req *types.GetDaemonSetDeta
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetDaemonSetDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	daemonset := k8sclient.DaemonSet{}
-	daemonSetDetail, err := daemonset.GetDaemonSetDetail(client, req.DaemonSetName, req.Namespace)
+	daemonSetDetail, err := k8sclient.DaemonSetClient.GetDaemonSetDetail(client, req.DaemonSetName, req.Namespace)
 	if err != nil {
 		return &types.GetDaemonSetDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

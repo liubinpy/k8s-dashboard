@@ -32,8 +32,7 @@ func (l *DeleteDaemonSetLogic) DeleteDaemonSet(req *types.DeleteDaemonSetRequest
 		return &types.DeleteDaemonSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	daemonset := k8sclient.DaemonSet{}
-	err = daemonset.DeleteDaemonSet(client, req.DaemonSetName, req.Namespace)
+	err = k8sclient.DaemonSetClient.DeleteDaemonSet(client, req.DaemonSetName, req.Namespace)
 	if err != nil {
 		return &types.DeleteDaemonSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

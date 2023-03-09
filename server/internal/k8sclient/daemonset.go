@@ -10,10 +10,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-type DaemonSet struct {
+var DaemonSetClient daemonSet
+
+type daemonSet struct {
 }
 
-func (d *DaemonSet) toCells(std []appsv1.DaemonSet) []DataCell {
+func (d *daemonSet) toCells(std []appsv1.DaemonSet) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = daemonSetCell(std[i])
@@ -21,7 +23,7 @@ func (d *DaemonSet) toCells(std []appsv1.DaemonSet) []DataCell {
 	return cells
 }
 
-func (d *DaemonSet) fromCells(cells []DataCell) []appsv1.DaemonSet {
+func (d *daemonSet) fromCells(cells []DataCell) []appsv1.DaemonSet {
 	daemonSets := make([]appsv1.DaemonSet, len(cells))
 	for i := range cells {
 		daemonSets[i] = appsv1.DaemonSet(cells[i].(daemonSetCell))
@@ -30,7 +32,7 @@ func (d *DaemonSet) fromCells(cells []DataCell) []appsv1.DaemonSet {
 }
 
 // GetDaemonSetList 获取daemonSet列表
-func (d *DaemonSet) GetDaemonSetList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, daemonSets []appsv1.DaemonSet, err error) {
+func (d *daemonSet) GetDaemonSetList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, daemonSets []appsv1.DaemonSet, err error) {
 	daemonSetList, err := client.AppsV1().DaemonSets(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取daemonSet列表失败, %s", err.Error())
@@ -60,7 +62,7 @@ func (d *DaemonSet) GetDaemonSetList(client *kubernetes.Clientset, filterName, n
 }
 
 // GetDaemonSetDetail 获取DaemonSet详情
-func (d *DaemonSet) GetDaemonSetDetail(client *kubernetes.Clientset, daemonSetName, namespace string) (daemonSet *appsv1.DaemonSet, err error) {
+func (d *daemonSet) GetDaemonSetDetail(client *kubernetes.Clientset, daemonSetName, namespace string) (daemonSet *appsv1.DaemonSet, err error) {
 	daemonSet, err = client.AppsV1().DaemonSets(namespace).Get(context.TODO(), daemonSetName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取DaemonSet详情失败%s", err.Error())
@@ -70,7 +72,7 @@ func (d *DaemonSet) GetDaemonSetDetail(client *kubernetes.Clientset, daemonSetNa
 }
 
 // DeleteDaemonSet 删除DaemonSet
-func (d *DaemonSet) DeleteDaemonSet(client *kubernetes.Clientset, daemonSetName, namespace string) (err error) {
+func (d *daemonSet) DeleteDaemonSet(client *kubernetes.Clientset, daemonSetName, namespace string) (err error) {
 	err = client.AppsV1().DaemonSets(namespace).Delete(context.TODO(), daemonSetName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除DaemonSet失败%s", err.Error())
@@ -80,7 +82,7 @@ func (d *DaemonSet) DeleteDaemonSet(client *kubernetes.Clientset, daemonSetName,
 }
 
 // UpdateDaemonSet 更新DaemonSet
-func (d *DaemonSet) UpdateDaemonSet(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (d *daemonSet) UpdateDaemonSet(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newDaemonSet := new(appsv1.DaemonSet)
 	err = json.Unmarshal([]byte(content), newDaemonSet)
 	if err != nil {

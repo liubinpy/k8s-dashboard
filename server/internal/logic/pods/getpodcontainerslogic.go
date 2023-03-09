@@ -32,8 +32,7 @@ func (l *GetPodContainersLogic) GetPodContainers(req *types.GetPodContainersRequ
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPodContainersResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pod := k8sclient.Pod{}
-	containers, err := pod.GetPodContainers(client, req.PodName, req.Namespace)
+	containers, err := k8sclient.PodClient.GetPodContainers(client, req.PodName, req.Namespace)
 	if err != nil {
 		return &types.GetPodContainersResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -31,9 +31,8 @@ func (l *DeleteServiceLogic) DeleteService(req *types.DeleteServiceRequest) (res
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.DeleteServiceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	service := k8sclient.Service{}
 
-	err = service.DeleteService(client, req.Namespace, req.ServiceName)
+	err = k8sclient.ServiceClient.DeleteService(client, req.Namespace, req.ServiceName)
 	if err != nil {
 		return &types.DeleteServiceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

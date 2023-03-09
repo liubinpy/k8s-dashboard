@@ -32,8 +32,7 @@ func (l *GetPVCDetailLogic) GetPVCDetail(req *types.GetPVCDetailRequest) (resp *
 		return &types.GetPVCDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	pvc := k8sclient.PVC{}
-	pvcDetail, err := pvc.GetPVCDetail(client, req.Namespace, req.PVCName)
+	pvcDetail, err := k8sclient.PVCClient.GetPVCDetail(client, req.Namespace, req.PVCName)
 	if err != nil {
 		return &types.GetPVCDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -9,11 +9,13 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
+var PVClient pv
+
 // PV 持久化存储
-type PV struct {
+type pv struct {
 }
 
-func (p *PV) toCells(std []corev1.PersistentVolume) []DataCell {
+func (p *pv) toCells(std []corev1.PersistentVolume) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = pvCell(std[i])
@@ -21,7 +23,7 @@ func (p *PV) toCells(std []corev1.PersistentVolume) []DataCell {
 	return cells
 }
 
-func (p *PV) fromCells(cells []DataCell) []corev1.PersistentVolume {
+func (p *pv) fromCells(cells []DataCell) []corev1.PersistentVolume {
 	pvs := make([]corev1.PersistentVolume, len(cells))
 	for i := range cells {
 		pvs[i] = corev1.PersistentVolume(cells[i].(pvCell))
@@ -30,7 +32,7 @@ func (p *PV) fromCells(cells []DataCell) []corev1.PersistentVolume {
 }
 
 // GetPVList 获取GetPVList列表
-func (p *PV) GetPVList(client *kubernetes.Clientset, filterName string, limit, page int) (total int, pvs []corev1.PersistentVolume, err error) {
+func (p *pv) GetPVList(client *kubernetes.Clientset, filterName string, limit, page int) (total int, pvs []corev1.PersistentVolume, err error) {
 	pvList, err := client.CoreV1().PersistentVolumes().List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取pv列表失败, %s", err.Error())
@@ -60,7 +62,7 @@ func (p *PV) GetPVList(client *kubernetes.Clientset, filterName string, limit, p
 }
 
 // GetPVDetail 获取pv详情
-func (p *PV) GetPVDetail(client *kubernetes.Clientset, pvName string) (pv *corev1.PersistentVolume, err error) {
+func (p *pv) GetPVDetail(client *kubernetes.Clientset, pvName string) (pv *corev1.PersistentVolume, err error) {
 	pv, err = client.CoreV1().PersistentVolumes().Get(context.TODO(), pvName, metav1.GetOptions{})
 
 	if err != nil {
@@ -71,7 +73,7 @@ func (p *PV) GetPVDetail(client *kubernetes.Clientset, pvName string) (pv *corev
 }
 
 // DeletePV 删除pv
-func (p *PV) DeletePV(client *kubernetes.Clientset, pvName string) (err error) {
+func (p *pv) DeletePV(client *kubernetes.Clientset, pvName string) (err error) {
 	err = client.CoreV1().PersistentVolumes().Delete(context.TODO(), pvName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除pv失败:%s", err.Error())

@@ -32,9 +32,7 @@ func (l *DeleteSecretLogic) DeleteSecret(req *types.DeleteSecretRequest) (resp *
 		return &types.DeleteSecretResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	secret := k8sclient.Secret{}
-
-	err = secret.DeleteSecret(client, req.Namespace, req.SecretName)
+	err = k8sclient.SecretClient.DeleteSecret(client, req.Namespace, req.SecretName)
 	if err != nil {
 		return &types.DeleteSecretResponse{
 			Code: response.Failed,

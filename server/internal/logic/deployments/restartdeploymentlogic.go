@@ -33,9 +33,7 @@ func (l *RestartDeploymentLogic) RestartDeployment(req *types.RestartDeploymentR
 		return &types.RestartDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-
-	err = deployment.RestartDeployment(client, req.DeploymentName, req.Namespace)
+	err = k8sclient.DeploymentClient.RestartDeployment(client, req.DeploymentName, req.Namespace)
 	if err != nil {
 		return &types.RestartDeploymentResponse{
 			Code:    response.Failed,

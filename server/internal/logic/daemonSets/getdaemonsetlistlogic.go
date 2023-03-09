@@ -32,8 +32,7 @@ func (l *GetDaemonSetListLogic) GetDaemonSetList(req *types.GetDaemonSetListRequ
 		return &types.GetDaemonSetListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	daemonset := k8sclient.DaemonSet{}
-	total, daemonSets, err := daemonset.GetDaemonSetList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, daemonSets, err := k8sclient.DaemonSetClient.GetDaemonSetList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetDaemonSetListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -9,11 +9,13 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
+var NamespaceClient namespace
+
 // Namespace 名称空间
-type Namespace struct {
+type namespace struct {
 }
 
-func (n *Namespace) toCells(std []corev1.Namespace) []DataCell {
+func (n *namespace) toCells(std []corev1.Namespace) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = namespaceCell(std[i])
@@ -21,7 +23,7 @@ func (n *Namespace) toCells(std []corev1.Namespace) []DataCell {
 	return cells
 }
 
-func (n *Namespace) fromCells(cells []DataCell) []corev1.Namespace {
+func (n *namespace) fromCells(cells []DataCell) []corev1.Namespace {
 	namespaces := make([]corev1.Namespace, len(cells))
 	for i := range cells {
 		namespaces[i] = corev1.Namespace(cells[i].(namespaceCell))
@@ -30,7 +32,7 @@ func (n *Namespace) fromCells(cells []DataCell) []corev1.Namespace {
 }
 
 // GetNamespaceList 获取GetNamespaceList列表
-func (n *Namespace) GetNamespaceList(client *kubernetes.Clientset, filterName string, limit, page int) (total int, namespaces []corev1.Namespace, err error) {
+func (n *namespace) GetNamespaceList(client *kubernetes.Clientset, filterName string, limit, page int) (total int, namespaces []corev1.Namespace, err error) {
 	namespaceList, err := client.CoreV1().Namespaces().List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取namespace列表失败, %s", err.Error())
@@ -60,7 +62,7 @@ func (n *Namespace) GetNamespaceList(client *kubernetes.Clientset, filterName st
 }
 
 // GetNamespaceDetail 获取namespace详情
-func (n *Namespace) GetNamespaceDetail(client *kubernetes.Clientset, namespaceName string) (namespace *corev1.Namespace, err error) {
+func (n *namespace) GetNamespaceDetail(client *kubernetes.Clientset, namespaceName string) (namespace *corev1.Namespace, err error) {
 	namespace, err = client.CoreV1().Namespaces().Get(context.TODO(), namespaceName, metav1.GetOptions{})
 
 	if err != nil {
@@ -71,7 +73,7 @@ func (n *Namespace) GetNamespaceDetail(client *kubernetes.Clientset, namespaceNa
 }
 
 // DeleteNamespace 删除namespace
-func (n *Namespace) DeleteNamespace(client *kubernetes.Clientset, namespaceName string) (err error) {
+func (n *namespace) DeleteNamespace(client *kubernetes.Clientset, namespaceName string) (err error) {
 	err = client.CoreV1().Namespaces().Delete(context.TODO(), namespaceName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除namespace失败:%s", err.Error())

@@ -10,11 +10,13 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// PVC 配置
-type PVC struct {
+var PVCClient pvc
+
+// pvc 配置
+type pvc struct {
 }
 
-func (s *PVC) toCells(std []corev1.PersistentVolumeClaim) []DataCell {
+func (p *pvc) toCells(std []corev1.PersistentVolumeClaim) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = pvcCell(std[i])
@@ -22,7 +24,7 @@ func (s *PVC) toCells(std []corev1.PersistentVolumeClaim) []DataCell {
 	return cells
 }
 
-func (s *PVC) fromCells(cells []DataCell) []corev1.PersistentVolumeClaim {
+func (p *pvc) fromCells(cells []DataCell) []corev1.PersistentVolumeClaim {
 	pvcs := make([]corev1.PersistentVolumeClaim, len(cells))
 	for i := range cells {
 		pvcs[i] = corev1.PersistentVolumeClaim(cells[i].(pvcCell))
@@ -31,7 +33,7 @@ func (s *PVC) fromCells(cells []DataCell) []corev1.PersistentVolumeClaim {
 }
 
 // GetPVCList 获取secret列表
-func (s *PVC) GetPVCList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, pvcs []corev1.PersistentVolumeClaim, err error) {
+func (p *pvc) GetPVCList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, pvcs []corev1.PersistentVolumeClaim, err error) {
 	pvcList, err := client.CoreV1().PersistentVolumeClaims(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取pvc列表失败, %s", err.Error())
@@ -40,7 +42,7 @@ func (s *PVC) GetPVCList(client *kubernetes.Clientset, filterName, namespace str
 
 	// 实例化
 	selectableData := &dataSelector{
-		GenericDataList: s.toCells(pvcList.Items),
+		GenericDataList: p.toCells(pvcList.Items),
 		dataSelectorQuery: &DataSelectorQuery{
 			FilterQuery: &FilterQuery{Name: filterName},
 			PaginateQuery: &PaginateQuery{
@@ -55,13 +57,13 @@ func (s *PVC) GetPVCList(client *kubernetes.Clientset, filterName, namespace str
 	total = len(filtered.GenericDataList)
 
 	// 排序筛选后转换
-	pvcs = s.fromCells(filtered.Sort().Paginate().GenericDataList)
+	pvcs = p.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, pvcs, nil
 }
 
 // CreatePVC 创建pvc
-func (s *PVC) CreatePVC(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (p *pvc) CreatePVC(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newPVC := &corev1.PersistentVolumeClaim{}
 	err = json.Unmarshal([]byte(content), newPVC)
 	if err != nil {
@@ -78,7 +80,7 @@ func (s *PVC) CreatePVC(client *kubernetes.Clientset, namespace, content string)
 }
 
 // GetPVCDetail 获取pvc详情
-func (s *PVC) GetPVCDetail(client *kubernetes.Clientset, namespace, pvcName string) (pvc *corev1.PersistentVolumeClaim, err error) {
+func (p *pvc) GetPVCDetail(client *kubernetes.Clientset, namespace, pvcName string) (pvc *corev1.PersistentVolumeClaim, err error) {
 	pvc, err = client.CoreV1().PersistentVolumeClaims(namespace).Get(context.TODO(), pvcName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取pvc失败:%s", err.Error())
@@ -89,7 +91,7 @@ func (s *PVC) GetPVCDetail(client *kubernetes.Clientset, namespace, pvcName stri
 }
 
 // DeletePVC 删除pvc
-func (s *PVC) DeletePVC(client *kubernetes.Clientset, namespace, pvcName string) (err error) {
+func (p *pvc) DeletePVC(client *kubernetes.Clientset, namespace, pvcName string) (err error) {
 	err = client.CoreV1().PersistentVolumeClaims(namespace).Delete(context.TODO(), pvcName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除pvc失败:%s", err.Error())
@@ -99,7 +101,7 @@ func (s *PVC) DeletePVC(client *kubernetes.Clientset, namespace, pvcName string)
 }
 
 // UpdatePVC 更新pvc
-func (s *PVC) UpdatePVC(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (p *pvc) UpdatePVC(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newPVC := &corev1.PersistentVolumeClaim{}
 	err = json.Unmarshal([]byte(content), newPVC)
 	if err != nil {

@@ -32,8 +32,7 @@ func (l *DeletePodLogic) DeletePod(req *types.DeletePodRequest) (resp *types.Del
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.DeletePodResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pod := k8sclient.Pod{}
-	err = pod.DeletePod(client, req.PodName, req.Namespace)
+	err = k8sclient.PodClient.DeletePod(client, req.PodName, req.Namespace)
 	if err != nil {
 		return &types.DeletePodResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

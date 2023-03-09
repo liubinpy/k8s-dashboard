@@ -33,8 +33,7 @@ func (l *GetDeploymentListLogic) GetDeploymentList(req *types.GetDeploymentListR
 		return &types.GetDeploymentListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-	total, deployments, err := deployment.GetDeploymentList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, deployments, err := k8sclient.DeploymentClient.GetDeploymentList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetDeploymentListResponse{
 			Code:    response.Failed,

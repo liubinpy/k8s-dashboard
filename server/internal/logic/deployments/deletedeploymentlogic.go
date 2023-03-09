@@ -33,8 +33,7 @@ func (l *DeleteDeploymentLogic) DeleteDeployment(req *types.DeleteDeploymentRequ
 		return &types.DeleteDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-	err = deployment.DeleteDeployment(client, req.DeploymentName, req.Namespace)
+	err = k8sclient.DeploymentClient.DeleteDeployment(client, req.DeploymentName, req.Namespace)
 	if err != nil {
 		return &types.DeleteDeploymentResponse{
 			Code:    response.Failed,

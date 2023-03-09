@@ -32,8 +32,7 @@ func (l *DeleteConfigmapLogic) DeleteConfigmap(req *types.DeleteConfigmapRequest
 		return &types.DeleteConfigmapResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	configmap := k8sclient.Configmap{}
-	err = configmap.DeleteConfigmap(client, req.Namespace, req.ConfigmapName)
+	err = k8sclient.ConfigmapClient.DeleteConfigmap(client, req.Namespace, req.ConfigmapName)
 	if err != nil {
 		return &types.DeleteConfigmapResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

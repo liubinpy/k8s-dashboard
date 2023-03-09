@@ -10,11 +10,13 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Secret 配置
-type Secret struct {
+var SecretClient secret
+
+// secret 配置
+type secret struct {
 }
 
-func (s *Secret) toCells(std []corev1.Secret) []DataCell {
+func (s *secret) toCells(std []corev1.Secret) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = secretCell(std[i])
@@ -22,7 +24,7 @@ func (s *Secret) toCells(std []corev1.Secret) []DataCell {
 	return cells
 }
 
-func (s *Secret) fromCells(cells []DataCell) []corev1.Secret {
+func (s *secret) fromCells(cells []DataCell) []corev1.Secret {
 	secrets := make([]corev1.Secret, len(cells))
 	for i := range cells {
 		secrets[i] = corev1.Secret(cells[i].(secretCell))
@@ -31,7 +33,7 @@ func (s *Secret) fromCells(cells []DataCell) []corev1.Secret {
 }
 
 // GetSecretList 获取secret列表
-func (s *Secret) GetSecretList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, secrets []corev1.Secret, err error) {
+func (s *secret) GetSecretList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, secrets []corev1.Secret, err error) {
 	secretList, err := client.CoreV1().Secrets(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取secret列表失败, %s", err.Error())
@@ -61,7 +63,7 @@ func (s *Secret) GetSecretList(client *kubernetes.Clientset, filterName, namespa
 }
 
 // CreateSecret 创建secret
-func (s *Secret) CreateSecret(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (s *secret) CreateSecret(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newSecret := &corev1.Secret{}
 	err = json.Unmarshal([]byte(content), newSecret)
 	if err != nil {
@@ -78,7 +80,7 @@ func (s *Secret) CreateSecret(client *kubernetes.Clientset, namespace, content s
 }
 
 // GetSecretDetail 获取secret详情
-func (s *Secret) GetSecretDetail(client *kubernetes.Clientset, namespace, secretName string) (secret *corev1.Secret, err error) {
+func (s *secret) GetSecretDetail(client *kubernetes.Clientset, namespace, secretName string) (secret *corev1.Secret, err error) {
 	secret, err = client.CoreV1().Secrets(namespace).Get(context.TODO(), secretName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取secret失败:%s", err.Error())
@@ -89,7 +91,7 @@ func (s *Secret) GetSecretDetail(client *kubernetes.Clientset, namespace, secret
 }
 
 // DeleteSecret 删除secret
-func (s *Secret) DeleteSecret(client *kubernetes.Clientset, namespace, secretName string) (err error) {
+func (s *secret) DeleteSecret(client *kubernetes.Clientset, namespace, secretName string) (err error) {
 	err = client.CoreV1().Secrets(namespace).Delete(context.TODO(), secretName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除secret失败:%s", err.Error())
@@ -99,7 +101,7 @@ func (s *Secret) DeleteSecret(client *kubernetes.Clientset, namespace, secretNam
 }
 
 // UpdateSecret 更新secret
-func (s *Secret) UpdateSecret(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (s *secret) UpdateSecret(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newSecret := &corev1.Secret{}
 	err = json.Unmarshal([]byte(content), newSecret)
 	if err != nil {

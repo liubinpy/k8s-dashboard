@@ -32,9 +32,7 @@ func (l *GetServiceDetailLogic) GetServiceDetail(req *types.GetServiceDetailRequ
 		return &types.GetServiceDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	service := k8sclient.Service{}
-
-	serviceDetail, err := service.GetServiceDetail(client, req.Namespace, req.ServiceName)
+	serviceDetail, err := k8sclient.ServiceClient.GetServiceDetail(client, req.Namespace, req.ServiceName)
 	if err != nil {
 		return &types.GetServiceDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

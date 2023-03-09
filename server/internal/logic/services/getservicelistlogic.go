@@ -32,8 +32,7 @@ func (l *GetServiceListLogic) GetServiceList(req *types.GetServiceListRequest) (
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetServiceListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	service := k8sclient.Service{}
-	total, services, err := service.GetServiceList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, services, err := k8sclient.ServiceClient.GetServiceList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetServiceListResponse{
 			Code:    response.Failed,

@@ -32,8 +32,7 @@ func (l *DeletePVCLogic) DeletePVC(req *types.DeletePVCRequest) (resp *types.Del
 		return &types.DeletePVCResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	pvc := k8sclient.PVC{}
-	err = pvc.DeletePVC(client, req.Namespace, req.PVCName)
+	err = k8sclient.PVCClient.DeletePVC(client, req.Namespace, req.PVCName)
 	if err != nil {
 		return &types.DeletePVCResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

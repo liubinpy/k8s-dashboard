@@ -32,8 +32,7 @@ func (l *UpdateConfigmapLogic) UpdateConfigmap(req *types.UpdateConfigmapRequest
 		return &types.UpdateConfigmapResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	configmap := k8sclient.Configmap{}
-	err = configmap.UpdateConfigmap(client, req.Namespace, req.Content)
+	err = k8sclient.ConfigmapClient.UpdateConfigmap(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateConfigmapResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

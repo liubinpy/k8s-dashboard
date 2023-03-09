@@ -10,10 +10,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-type StatefulSet struct {
+var StatefulSetClient statefulset
+
+type statefulset struct {
 }
 
-func (d *StatefulSet) toCells(std []appsv1.StatefulSet) []DataCell {
+func (s *statefulset) toCells(std []appsv1.StatefulSet) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = statefulSetCell(std[i])
@@ -21,7 +23,7 @@ func (d *StatefulSet) toCells(std []appsv1.StatefulSet) []DataCell {
 	return cells
 }
 
-func (d *StatefulSet) fromCells(cells []DataCell) []appsv1.StatefulSet {
+func (s *statefulset) fromCells(cells []DataCell) []appsv1.StatefulSet {
 	statefulSets := make([]appsv1.StatefulSet, len(cells))
 	for i := range cells {
 		statefulSets[i] = appsv1.StatefulSet(cells[i].(statefulSetCell))
@@ -30,7 +32,7 @@ func (d *StatefulSet) fromCells(cells []DataCell) []appsv1.StatefulSet {
 }
 
 // GetStatefulSetList 获取statefulSet列表
-func (d *StatefulSet) GetStatefulSetList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, statefulSets []appsv1.StatefulSet, err error) {
+func (s *statefulset) GetStatefulSetList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, statefulSets []appsv1.StatefulSet, err error) {
 	statefulSetList, err := client.AppsV1().StatefulSets(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取statefulSet列表失败, %s", err.Error())
@@ -39,7 +41,7 @@ func (d *StatefulSet) GetStatefulSetList(client *kubernetes.Clientset, filterNam
 
 	// 实例化
 	selectableData := &dataSelector{
-		GenericDataList: d.toCells(statefulSetList.Items),
+		GenericDataList: s.toCells(statefulSetList.Items),
 		dataSelectorQuery: &DataSelectorQuery{
 			FilterQuery: &FilterQuery{Name: filterName},
 			PaginateQuery: &PaginateQuery{
@@ -54,13 +56,13 @@ func (d *StatefulSet) GetStatefulSetList(client *kubernetes.Clientset, filterNam
 	total = len(filtered.GenericDataList)
 
 	// 排序筛选后转换
-	statefulSets = d.fromCells(filtered.Sort().Paginate().GenericDataList)
+	statefulSets = s.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, statefulSets, nil
 }
 
 // GetStatefulSetDetail 获取StatefulSet详情
-func (d *StatefulSet) GetStatefulSetDetail(client *kubernetes.Clientset, statefulSetName, namespace string) (statefulSet *appsv1.StatefulSet, err error) {
+func (s *statefulset) GetStatefulSetDetail(client *kubernetes.Clientset, statefulSetName, namespace string) (statefulSet *appsv1.StatefulSet, err error) {
 	statefulSet, err = client.AppsV1().StatefulSets(namespace).Get(context.TODO(), statefulSetName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取StatefulSet详情失败%s", err.Error())
@@ -70,7 +72,7 @@ func (d *StatefulSet) GetStatefulSetDetail(client *kubernetes.Clientset, statefu
 }
 
 // DeleteStatefulSet 删除StatefulSet
-func (d *StatefulSet) DeleteStatefulSet(client *kubernetes.Clientset, statefulSetName, namespace string) (err error) {
+func (s *statefulset) DeleteStatefulSet(client *kubernetes.Clientset, statefulSetName, namespace string) (err error) {
 	err = client.AppsV1().StatefulSets(namespace).Delete(context.TODO(), statefulSetName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除StatefulSet失败%s", err.Error())
@@ -80,7 +82,7 @@ func (d *StatefulSet) DeleteStatefulSet(client *kubernetes.Clientset, statefulSe
 }
 
 // UpdateStatefulSet 更新StatefulSet
-func (d *StatefulSet) UpdateStatefulSet(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (s *statefulset) UpdateStatefulSet(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newStatefulSet := new(appsv1.StatefulSet)
 	err = json.Unmarshal([]byte(content), newStatefulSet)
 	if err != nil {

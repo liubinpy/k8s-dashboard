@@ -31,8 +31,7 @@ func (l *UpdatePVCLogic) UpdatePVC(req *types.UpdatePVCRequest) (resp *types.Upd
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdatePVCResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pvc := k8sclient.PVC{}
-	err = pvc.UpdatePVC(client, req.Namespace, req.Content)
+	err = k8sclient.PVCClient.UpdatePVC(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdatePVCResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -31,9 +31,8 @@ func (l *GetNodesLogic) GetNodes(req *types.GetNodesRequest) (resp *types.GetNod
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetNodesResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	node := k8sclient.Node{}
 
-	total, nodes, err := node.GetNodeList(client, req.FilterName, req.Limit, req.Page)
+	total, nodes, err := k8sclient.NodeClient.GetNodeList(client, req.FilterName, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetNodesResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -32,9 +32,7 @@ func (l *GetConfigmapDetailLogic) GetConfigmapDetail(req *types.GetConfigmapDeta
 		return &types.GetConfigmapDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	configmap := k8sclient.Configmap{}
-
-	configmapDetail, err := configmap.GetConfigmapDetail(client, req.Namespace, req.ConfigmapName)
+	configmapDetail, err := k8sclient.ConfigmapClient.GetConfigmapDetail(client, req.Namespace, req.ConfigmapName)
 	if err != nil {
 		return &types.GetConfigmapDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

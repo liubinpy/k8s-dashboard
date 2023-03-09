@@ -10,11 +10,13 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Service 服务
-type Service struct {
+var ServiceClient service
+
+// service 服务
+type service struct {
 }
 
-func (s *Service) toCells(std []corev1.Service) []DataCell {
+func (s *service) toCells(std []corev1.Service) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = serviceCell(std[i])
@@ -22,7 +24,7 @@ func (s *Service) toCells(std []corev1.Service) []DataCell {
 	return cells
 }
 
-func (s *Service) fromCells(cells []DataCell) []corev1.Service {
+func (s *service) fromCells(cells []DataCell) []corev1.Service {
 	services := make([]corev1.Service, len(cells))
 	for i := range cells {
 		services[i] = corev1.Service(cells[i].(serviceCell))
@@ -31,7 +33,7 @@ func (s *Service) fromCells(cells []DataCell) []corev1.Service {
 }
 
 // GetServiceList 获取service列表
-func (s *Service) GetServiceList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, services []corev1.Service, err error) {
+func (s *service) GetServiceList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, services []corev1.Service, err error) {
 	serviceList, err := client.CoreV1().Services(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取services列表失败, %s", err.Error())
@@ -61,7 +63,7 @@ func (s *Service) GetServiceList(client *kubernetes.Clientset, filterName, names
 }
 
 // CreateService 创建service
-func (s *Service) CreateService(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (s *service) CreateService(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newService := &corev1.Service{}
 	err = json.Unmarshal([]byte(content), newService)
 	if err != nil {
@@ -78,7 +80,7 @@ func (s *Service) CreateService(client *kubernetes.Clientset, namespace, content
 }
 
 // GetServiceDetail 获取service详情
-func (s *Service) GetServiceDetail(client *kubernetes.Clientset, namespace, serviceName string) (service *corev1.Service, err error) {
+func (s *service) GetServiceDetail(client *kubernetes.Clientset, namespace, serviceName string) (service *corev1.Service, err error) {
 	service, err = client.CoreV1().Services(namespace).Get(context.TODO(), serviceName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取service失败:%s", err.Error())
@@ -89,7 +91,7 @@ func (s *Service) GetServiceDetail(client *kubernetes.Clientset, namespace, serv
 }
 
 // DeleteService 删除service
-func (s *Service) DeleteService(client *kubernetes.Clientset, namespace, serviceName string) (err error) {
+func (s *service) DeleteService(client *kubernetes.Clientset, namespace, serviceName string) (err error) {
 	err = client.CoreV1().Services(namespace).Delete(context.TODO(), serviceName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除service失败:%s", err.Error())
@@ -99,7 +101,7 @@ func (s *Service) DeleteService(client *kubernetes.Clientset, namespace, service
 }
 
 // UpdateService 更新service
-func (s *Service) UpdateService(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (s *service) UpdateService(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newService := &corev1.Service{}
 	err = json.Unmarshal([]byte(content), newService)
 	if err != nil {

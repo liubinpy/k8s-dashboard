@@ -32,8 +32,7 @@ func (l *DeleteNamespaceLogic) DeleteNamespace(req *types.DeleteNamespaceRequest
 		return &types.DeleteNamespaceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	namespace := k8sclient.Namespace{}
-	err = namespace.DeleteNamespace(client, req.NamespaceName)
+	err = k8sclient.NamespaceClient.DeleteNamespace(client, req.NamespaceName)
 	if err != nil {
 		return &types.DeleteNamespaceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

@@ -33,8 +33,7 @@ func (l *UpdateDeploymentLogic) UpdateDeployment(req *types.UpdateDeploymentRequ
 		return &types.UpdateDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-	err = deployment.UpdateDeployment(client, req.Namespace, req.Content)
+	err = k8sclient.DeploymentClient.UpdateDeployment(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

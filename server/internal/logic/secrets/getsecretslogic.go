@@ -31,9 +31,8 @@ func (l *GetSecretsLogic) GetSecrets(req *types.GetSecretsRequest) (resp *types.
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetSecretsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	secret := k8sclient.Secret{}
 
-	total, secrets, err := secret.GetSecretList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, secrets, err := k8sclient.SecretClient.GetSecretList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetSecretsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

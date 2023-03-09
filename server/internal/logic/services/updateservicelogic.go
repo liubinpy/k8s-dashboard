@@ -31,8 +31,7 @@ func (l *UpdateServiceLogic) UpdateService(req *types.UpdateServiceRequest) (res
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdateServiceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	service := k8sclient.Service{}
-	err = service.UpdateService(client, req.Namespace, req.Content)
+	err = k8sclient.ServiceClient.UpdateService(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateServiceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

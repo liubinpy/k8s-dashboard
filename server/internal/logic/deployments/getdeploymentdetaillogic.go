@@ -33,8 +33,7 @@ func (l *GetDeploymentDetailLogic) GetDeploymentDetail(req *types.GetDeploymentD
 		return &types.GetDeploymentDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-	deploymentDetail, err := deployment.GetDeploymentDetail(client, req.DeploymentName, req.Namespace)
+	deploymentDetail, err := k8sclient.DeploymentClient.GetDeploymentDetail(client, req.DeploymentName, req.Namespace)
 	if err != nil {
 		return &types.GetDeploymentDetailResponse{
 			Code:    response.Failed,

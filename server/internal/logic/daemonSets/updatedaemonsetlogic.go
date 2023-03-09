@@ -31,9 +31,8 @@ func (l *UpdateDaemonSetLogic) UpdateDaemonSet(req *types.UpdateDaemonSetRequest
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdateDaemonSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	daemonset := k8sclient.DaemonSet{}
 
-	err = daemonset.UpdateDaemonSet(client, req.Namespace, req.Content)
+	err = k8sclient.DaemonSetClient.UpdateDaemonSet(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateDaemonSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

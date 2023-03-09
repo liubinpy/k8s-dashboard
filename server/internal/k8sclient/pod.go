@@ -12,10 +12,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-type Pod struct {
+var PodClient pod
+
+type pod struct {
 }
 
-func (p *Pod) toCells(std []corev1.Pod) []DataCell {
+func (p *pod) toCells(std []corev1.Pod) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = podCell(std[i])
@@ -23,7 +25,7 @@ func (p *Pod) toCells(std []corev1.Pod) []DataCell {
 	return cells
 }
 
-func (p *Pod) fromCells(cells []DataCell) []corev1.Pod {
+func (p *pod) fromCells(cells []DataCell) []corev1.Pod {
 	pods := make([]corev1.Pod, len(cells))
 	for i := range cells {
 		pods[i] = corev1.Pod(cells[i].(podCell))
@@ -32,7 +34,7 @@ func (p *Pod) fromCells(cells []DataCell) []corev1.Pod {
 }
 
 // GetPodList 获取pod列表
-func (p *Pod) GetPodList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, pods []corev1.Pod, err error) {
+func (p *pod) GetPodList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, pods []corev1.Pod, err error) {
 	podList, err := client.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取pods列表失败, %s", err.Error())
@@ -62,7 +64,7 @@ func (p *Pod) GetPodList(client *kubernetes.Clientset, filterName, namespace str
 }
 
 // GetPodDetail 获取pod详情
-func (p *Pod) GetPodDetail(client *kubernetes.Clientset, podName, namespace string) (pod *corev1.Pod, err error) {
+func (p *pod) GetPodDetail(client *kubernetes.Clientset, podName, namespace string) (pod *corev1.Pod, err error) {
 	pod, err = client.CoreV1().Pods(namespace).Get(context.TODO(), podName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取pod %s详情失败: %s", podName, err.Error())
@@ -72,7 +74,7 @@ func (p *Pod) GetPodDetail(client *kubernetes.Clientset, podName, namespace stri
 }
 
 // DeletePod 删除pod
-func (p *Pod) DeletePod(client *kubernetes.Clientset, podName, namespace string) (err error) {
+func (p *pod) DeletePod(client *kubernetes.Clientset, podName, namespace string) (err error) {
 	err = client.CoreV1().Pods(namespace).Delete(context.TODO(), podName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除pod %s详情失败: %s", podName, err.Error())
@@ -82,7 +84,7 @@ func (p *Pod) DeletePod(client *kubernetes.Clientset, podName, namespace string)
 }
 
 // UpdatePod 更新pod, content为资源的json
-func (p *Pod) UpdatePod(client *kubernetes.Clientset, namespace string, content string) (err error) {
+func (p *pod) UpdatePod(client *kubernetes.Clientset, namespace string, content string) (err error) {
 	var pod = &corev1.Pod{}
 	err = json.Unmarshal([]byte(content), pod)
 	if err != nil {
@@ -98,7 +100,7 @@ func (p *Pod) UpdatePod(client *kubernetes.Clientset, namespace string, content 
 }
 
 // GetPodContainers 获取pods中的container
-func (p *Pod) GetPodContainers(client *kubernetes.Clientset, podName, namespace string) (containers []string, err error) {
+func (p *pod) GetPodContainers(client *kubernetes.Clientset, podName, namespace string) (containers []string, err error) {
 	podDetail, err := p.GetPodDetail(client, podName, namespace)
 	if err != nil {
 		return nil, err
@@ -110,7 +112,7 @@ func (p *Pod) GetPodContainers(client *kubernetes.Clientset, podName, namespace 
 }
 
 // GetPodLog 获取pod中的日志
-func (p *Pod) GetPodLog(client *kubernetes.Clientset, podTailLine int, containerName, podName, namespace string) (log string, err error) {
+func (p *pod) GetPodLog(client *kubernetes.Clientset, podTailLine int, containerName, podName, namespace string) (log string, err error) {
 	lineLimit := int64(podTailLine)
 	option := &corev1.PodLogOptions{
 		Container: containerName,

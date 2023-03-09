@@ -31,9 +31,8 @@ func (l *GetPVDetailLogic) GetPVDetail(req *types.GetPVDetailRequest) (resp *typ
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPVDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pv := k8sclient.PV{}
 
-	detail, err := pv.GetPVDetail(client, req.PVName)
+	detail, err := k8sclient.PVClient.GetPVDetail(client, req.PVName)
 	if err != nil {
 
 		return &types.GetPVDetailResponse{Code: response.Failed, Message: err.Error()}, nil

@@ -33,9 +33,7 @@ func (l *CreateServiceLogic) CreateService(req *types.CreateServiceRequest) (res
 
 	}
 
-	service := k8sclient.Service{}
-
-	err = service.CreateService(client, req.Namespace, req.Content)
+	err = k8sclient.ServiceClient.CreateService(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.CreateServiceResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

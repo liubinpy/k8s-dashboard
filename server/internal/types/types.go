@@ -11,7 +11,7 @@ type GetPodListRequest struct {
 
 type GetPodListResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    Pods   `json:"data"`
 }
 
@@ -40,7 +40,7 @@ type DeletePodRequest struct {
 
 type DeletePodResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdatePodRequest struct {
@@ -51,7 +51,7 @@ type UpdatePodRequest struct {
 
 type UpdatePodResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetPodContainersRequest struct {
@@ -75,7 +75,7 @@ type GetPodLogRequest struct {
 
 type GetPodLogResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Log     string `json:"log"`
 }
 
@@ -106,7 +106,7 @@ type CreateServiceRequest struct {
 
 type CreateServiceResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetServiceDetailRequest struct {
@@ -129,7 +129,7 @@ type DeleteServiceRequest struct {
 
 type DeleteServiceResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateServiceRequest struct {
@@ -140,7 +140,7 @@ type UpdateServiceRequest struct {
 
 type UpdateServiceResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetDeploymentListRequest struct {
@@ -182,7 +182,7 @@ type DeleteDeploymentRequest struct {
 
 type DeleteDeploymentResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateDeploymentRequest struct {
@@ -193,7 +193,7 @@ type UpdateDeploymentRequest struct {
 
 type UpdateDeploymentResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type ScaleDeploymentRequest struct {
@@ -205,7 +205,7 @@ type ScaleDeploymentRequest struct {
 
 type ScaleDeploymentResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type RestartDeploymentRequest struct {
@@ -216,7 +216,7 @@ type RestartDeploymentRequest struct {
 
 type RestartDeploymentResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type CreateDeploymentRequest struct {
@@ -227,7 +227,7 @@ type CreateDeploymentRequest struct {
 
 type CreateDeploymentResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetDaemonSetListRequest struct {
@@ -269,7 +269,7 @@ type DeleteDaemonSetRequest struct {
 
 type DeleteDaemonSetResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateDaemonSetRequest struct {
@@ -280,7 +280,7 @@ type UpdateDaemonSetRequest struct {
 
 type UpdateDaemonSetResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetStatefulSetListRequest struct {
@@ -322,7 +322,7 @@ type DeleteStatefulSetRequest struct {
 
 type DeleteStatefulSetResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateStatefulSetRequest struct {
@@ -333,7 +333,7 @@ type UpdateStatefulSetRequest struct {
 
 type UpdateStatefulSetResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type CreateIngressRequest struct {
@@ -344,7 +344,7 @@ type CreateIngressRequest struct {
 
 type CreateIngressResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetIngressListRequest struct {
@@ -386,7 +386,7 @@ type DeleteIngressRequest struct {
 
 type DeleteIngressResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateIngressRequest struct {
@@ -397,7 +397,7 @@ type UpdateIngressRequest struct {
 
 type UpdateIngressResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetNodesRequest struct {
@@ -409,7 +409,7 @@ type GetNodesRequest struct {
 
 type GetNodesResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    Nodes  `json:"data"`
 }
 
@@ -465,7 +465,7 @@ type DeleteNamespaceRequest struct {
 
 type DeleteNamespaceResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetPVsRequest struct {
@@ -477,7 +477,7 @@ type GetPVsRequest struct {
 
 type GetPVsResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    PVs    `json:"data"`
 }
 
@@ -504,7 +504,7 @@ type DeletePVRequest struct {
 
 type DeletePVResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetConfigmapsRequest struct {
@@ -546,7 +546,7 @@ type DeleteConfigmapRequest struct {
 
 type DeleteConfigmapResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateConfigmapRequest struct {
@@ -557,7 +557,7 @@ type UpdateConfigmapRequest struct {
 
 type UpdateConfigmapResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetSecretsRequest struct {
@@ -599,7 +599,7 @@ type DeleteSecretRequest struct {
 
 type DeleteSecretResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateSecretRequest struct {
@@ -610,7 +610,7 @@ type UpdateSecretRequest struct {
 
 type UpdateSecretResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetPVCsRequest struct {
@@ -623,7 +623,7 @@ type GetPVCsRequest struct {
 
 type GetPVCsResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    PVCs   `json:"data"`
 }
 
@@ -652,7 +652,7 @@ type DeletePVCRequest struct {
 
 type DeletePVCResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdatePVCRequest struct {
@@ -663,5 +663,5 @@ type UpdatePVCRequest struct {
 
 type UpdatePVCResponse struct {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }

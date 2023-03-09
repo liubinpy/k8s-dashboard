@@ -31,8 +31,7 @@ func (l *GetStatefulSetDetailLogic) GetStatefulSetDetail(req *types.GetStatefulS
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetStatefulSetDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	statefulset := k8sclient.StatefulSet{}
-	statefulSet, err := statefulset.GetStatefulSetDetail(client, req.StatefulSetName, req.Namespace)
+	statefulSet, err := k8sclient.StatefulSetClient.GetStatefulSetDetail(client, req.StatefulSetName, req.Namespace)
 	if err != nil {
 		return &types.GetStatefulSetDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

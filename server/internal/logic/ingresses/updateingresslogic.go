@@ -31,8 +31,7 @@ func (l *UpdateIngressLogic) UpdateIngress(req *types.UpdateIngressRequest) (res
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdateIngressResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	ingress := k8sclient.Ingresses{}
-	err = ingress.UpdateIngresses(client, req.Namespace, req.Content)
+	err = k8sclient.IngressClient.UpdateIngresses(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateIngressResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

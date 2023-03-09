@@ -31,8 +31,7 @@ func (l *UpdateStatefulSetLogic) UpdateStatefulSet(req *types.UpdateStatefulSetR
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.UpdateStatefulSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	statefulset := k8sclient.StatefulSet{}
-	err = statefulset.UpdateStatefulSet(client, req.Namespace, req.Content)
+	err = k8sclient.StatefulSetClient.UpdateStatefulSet(client, req.Namespace, req.Content)
 	if err != nil {
 		return &types.UpdateStatefulSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

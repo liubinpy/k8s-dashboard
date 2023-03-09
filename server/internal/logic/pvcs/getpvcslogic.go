@@ -31,8 +31,7 @@ func (l *GetPVCsLogic) GetPVCs(req *types.GetPVCsRequest) (resp *types.GetPVCsRe
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPVCsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pvc := k8sclient.PVC{}
-	total, pvcs, err := pvc.GetPVCList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, pvcs, err := k8sclient.PVCClient.GetPVCList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetPVCsResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

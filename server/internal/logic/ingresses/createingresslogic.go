@@ -32,8 +32,7 @@ func (l *CreateIngressLogic) CreateIngress(req *types.CreateIngressRequest) (res
 		return &types.CreateIngressResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	ingress := k8sclient.Ingresses{}
-	err = ingress.CreateIngresses(client, req.Namespace, req.Content)
+	err = k8sclient.IngressClient.CreateIngresses(client, req.Namespace, req.Content)
 	if err != nil {
 		if err != nil {
 			return &types.CreateIngressResponse{Code: response.Failed, Message: err.Error()}, nil

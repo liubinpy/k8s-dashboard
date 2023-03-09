@@ -32,8 +32,7 @@ func (l *DeleteStatefulSetLogic) DeleteStatefulSet(req *types.DeleteStatefulSetR
 		return &types.DeleteStatefulSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	statefulset := k8sclient.StatefulSet{}
-	err = statefulset.DeleteStatefulSet(client, req.StatefulSetName, req.Namespace)
+	err = k8sclient.StatefulSetClient.DeleteStatefulSet(client, req.StatefulSetName, req.Namespace)
 	if err != nil {
 		return &types.DeleteStatefulSetResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

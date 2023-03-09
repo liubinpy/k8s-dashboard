@@ -9,7 +9,7 @@ type GetPodListRequest {
 
 type GetPodListResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    Pods   `json:"data"`
 }
 
@@ -36,7 +36,7 @@ type DeletePodRequest {
 }
 type DeletePodResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdatePodRequest {
 	Cluster   string `json:"cluster"`
@@ -45,7 +45,7 @@ type UpdatePodRequest {
 }
 type UpdatePodResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type GetPodContainersRequest {
 	Cluster   string `json:"cluster"`
@@ -65,7 +65,7 @@ type GetPodLogRequest {
 }
 type GetPodLogResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Log     string `json:"log"`
 }
 // pod 结束
@@ -97,7 +97,7 @@ type CreateServiceRequest {
 }
 type CreateServiceResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetServiceDetailRequest {
@@ -117,7 +117,7 @@ type DeleteServiceRequest {
 }
 type DeleteServiceResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateServiceRequest {
 	Cluster   string `json:"cluster"`
@@ -126,7 +126,7 @@ type UpdateServiceRequest {
 }
 type UpdateServiceResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 // service 结束
 
@@ -167,7 +167,7 @@ type DeleteDeploymentRequest {
 }
 type DeleteDeploymentResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type UpdateDeploymentRequest {
@@ -177,7 +177,7 @@ type UpdateDeploymentRequest {
 }
 type UpdateDeploymentResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type ScaleDeploymentRequest {
 	Cluster        string `json:"cluster"`
@@ -187,7 +187,7 @@ type ScaleDeploymentRequest {
 }
 type ScaleDeploymentResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type RestartDeploymentRequest {
 	Cluster        string `json:"cluster"`
@@ -196,7 +196,7 @@ type RestartDeploymentRequest {
 }
 type RestartDeploymentResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type CreateDeploymentRequest {
 	Cluster   string `json:"cluster"`
@@ -205,7 +205,7 @@ type CreateDeploymentRequest {
 }
 type CreateDeploymentResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 // deployment 结束
 // daemonset 开始
@@ -244,7 +244,7 @@ type DeleteDaemonSetRequest {
 }
 type DeleteDaemonSetResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateDaemonSetRequest {
 	Cluster   string `json:"cluster"`
@@ -253,7 +253,7 @@ type UpdateDaemonSetRequest {
 }
 type UpdateDaemonSetResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 // daemonset 结束
@@ -294,7 +294,7 @@ type DeleteStatefulSetRequest {
 }
 type DeleteStatefulSetResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateStatefulSetRequest {
 	Cluster   string `json:"cluster"`
@@ -303,7 +303,7 @@ type UpdateStatefulSetRequest {
 }
 type UpdateStatefulSetResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 // statefulset 结束
@@ -316,7 +316,7 @@ type CreateIngressRequest {
 }
 type CreateIngressResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetIngressListRequest {
@@ -354,7 +354,7 @@ type DeleteIngressRequest {
 }
 type DeleteIngressResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateIngressRequest {
 	Cluster   string `json:"cluster"`
@@ -363,7 +363,7 @@ type UpdateIngressRequest {
 }
 type UpdateIngressResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 // ingress 结束
 
@@ -376,7 +376,7 @@ type GetNodesRequest {
 }
 type GetNodesResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    Nodes  `json:"data"`
 }
 type Nodes {
@@ -429,7 +429,7 @@ type DeleteNamespaceRequest {
 }
 type DeleteNamespaceResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 // namespace 结束
@@ -443,7 +443,7 @@ type GetPVsRequest {
 }
 type GetPVsResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    PVs    `json:"data"`
 }
 type PVs {
@@ -467,7 +467,7 @@ type DeletePVRequest {
 }
 type DeletePVResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 // pv 结束
 
@@ -506,7 +506,7 @@ type DeleteConfigmapRequest {
 }
 type DeleteConfigmapResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateConfigmapRequest {
 	Cluster   string `json:"cluster"`
@@ -515,7 +515,7 @@ type UpdateConfigmapRequest {
 }
 type UpdateConfigmapResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 // configmap 结束
@@ -555,7 +555,7 @@ type DeleteSecretRequest {
 }
 type DeleteSecretResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdateSecretRequest {
 	Cluster   string `json:"cluster"`
@@ -564,7 +564,7 @@ type UpdateSecretRequest {
 }
 type UpdateSecretResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 // secret 结束
 
@@ -578,7 +578,7 @@ type GetPVCsRequest {
 }
 type GetPVCsResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 	Data    PVCs   `json:"data"`
 }
 
@@ -604,7 +604,7 @@ type DeletePVCRequest {
 }
 type DeletePVCResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 type UpdatePVCRequest {
 	Cluster   string `json:"cluster"`
@@ -613,7 +613,7 @@ type UpdatePVCRequest {
 }
 type UpdatePVCResponse {
 	Code    string `json:"code"`
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }
 
 // pvc 结束

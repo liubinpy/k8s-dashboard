@@ -32,8 +32,7 @@ func (l *GetNamespacesLogic) GetNamespaces(req *types.GetNamespacesRequest) (res
 		return &types.GetNamespacesResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	namespace := k8sclient.Namespace{}
-	total, namespaces, err := namespace.GetNamespaceList(client, req.FilterName, req.Limit, req.Page)
+	total, namespaces, err := k8sclient.NamespaceClient.GetNamespaceList(client, req.FilterName, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetNamespacesResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

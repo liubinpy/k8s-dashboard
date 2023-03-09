@@ -32,8 +32,7 @@ func (l *DeleteIngressLogic) DeleteIngress(req *types.DeleteIngressRequest) (res
 		return &types.DeleteIngressResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	ingress := k8sclient.Ingresses{}
-	err = ingress.DeleteIngresses(client, req.IngressName, req.Namespace)
+	err = k8sclient.IngressClient.DeleteIngresses(client, req.IngressName, req.Namespace)
 	if err != nil {
 		return &types.DeleteIngressResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

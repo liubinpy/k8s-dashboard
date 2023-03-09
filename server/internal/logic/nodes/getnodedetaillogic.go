@@ -32,8 +32,7 @@ func (l *GetNodeDetailLogic) GetNodeDetail(req *types.GetNodeDetailRequest) (res
 		return &types.GetNodeDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	node := k8sclient.Node{}
-	detail, err := node.GetNodeDetail(client, req.NodeName)
+	detail, err := k8sclient.NodeClient.GetNodeDetail(client, req.NodeName)
 	if err != nil {
 		return &types.GetNodeDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

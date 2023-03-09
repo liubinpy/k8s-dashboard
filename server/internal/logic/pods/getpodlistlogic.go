@@ -31,8 +31,7 @@ func (l *GetPodListLogic) GetPodList(req *types.GetPodListRequest) (resp *types.
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPodListResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pod := k8sclient.Pod{}
-	total, pods, err := pod.GetPodList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
+	total, pods, err := k8sclient.PodClient.GetPodList(client, req.FilterName, req.Namespace, req.Limit, req.Page)
 	if err != nil {
 		return &types.GetPodListResponse{
 			Code:    response.Failed,

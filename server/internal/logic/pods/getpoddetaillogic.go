@@ -32,9 +32,8 @@ func (l *GetPodDetailLogic) GetPodDetail(req *types.GetPodDetailRequest) (resp *
 		logx.Errorf("获取集群client失败: %s", err)
 		return &types.GetPodDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
-	pod := k8sclient.Pod{}
 
-	podDetail, err := pod.GetPodDetail(client, req.PodName, req.Namespace)
+	podDetail, err := k8sclient.PodClient.GetPodDetail(client, req.PodName, req.Namespace)
 	if err != nil {
 		return &types.GetPodDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}

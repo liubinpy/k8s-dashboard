@@ -33,8 +33,7 @@ func (l *ScaleDeploymentLogic) ScaleDeployment(req *types.ScaleDeploymentRequest
 		return &types.ScaleDeploymentResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	deployment := k8sclient.Deployment{}
-	err = deployment.ScaleDeployment(client, req.DeploymentName, req.Namespace, req.Replica)
+	err = k8sclient.DeploymentClient.ScaleDeployment(client, req.DeploymentName, req.Namespace, req.Replica)
 	if err != nil {
 		return &types.ScaleDeploymentResponse{
 			Code:    response.Failed,

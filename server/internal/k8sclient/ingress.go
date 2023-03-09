@@ -10,10 +10,12 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-type Ingresses struct {
+var IngressClient ingress
+
+type ingress struct {
 }
 
-func (d *Ingresses) toCells(std []networkingv1.Ingress) []DataCell {
+func (i *ingress) toCells(std []networkingv1.Ingress) []DataCell {
 	cells := make([]DataCell, len(std))
 	for i := range std {
 		cells[i] = ingressCell(std[i])
@@ -21,7 +23,7 @@ func (d *Ingresses) toCells(std []networkingv1.Ingress) []DataCell {
 	return cells
 }
 
-func (d *Ingresses) fromCells(cells []DataCell) []networkingv1.Ingress {
+func (i *ingress) fromCells(cells []DataCell) []networkingv1.Ingress {
 	ingresses := make([]networkingv1.Ingress, len(cells))
 	for i := range cells {
 		ingresses[i] = networkingv1.Ingress(cells[i].(ingressCell))
@@ -30,7 +32,7 @@ func (d *Ingresses) fromCells(cells []DataCell) []networkingv1.Ingress {
 }
 
 // GetIngressesList 获取Ingress列表
-func (d *Ingresses) GetIngressesList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, ingresses []networkingv1.Ingress, err error) {
+func (i *ingress) GetIngressesList(client *kubernetes.Clientset, filterName, namespace string, limit, page int) (total int, ingresses []networkingv1.Ingress, err error) {
 	IngressList, err := client.NetworkingV1().Ingresses(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
 		logx.Errorf("获取Ingress列表失败, %s", err.Error())
@@ -39,7 +41,7 @@ func (d *Ingresses) GetIngressesList(client *kubernetes.Clientset, filterName, n
 
 	// 实例化
 	selectableData := &dataSelector{
-		GenericDataList: d.toCells(IngressList.Items),
+		GenericDataList: i.toCells(IngressList.Items),
 		dataSelectorQuery: &DataSelectorQuery{
 			FilterQuery: &FilterQuery{Name: filterName},
 			PaginateQuery: &PaginateQuery{
@@ -54,13 +56,13 @@ func (d *Ingresses) GetIngressesList(client *kubernetes.Clientset, filterName, n
 	total = len(filtered.GenericDataList)
 
 	// 排序筛选后转换
-	ingresses = d.fromCells(filtered.Sort().Paginate().GenericDataList)
+	ingresses = i.fromCells(filtered.Sort().Paginate().GenericDataList)
 
 	return total, ingresses, nil
 }
 
 // GetIngressDetail 获取Ingress详情
-func (d *Ingresses) GetIngressDetail(client *kubernetes.Clientset, IngressName, namespace string) (Ingress *networkingv1.Ingress, err error) {
+func (i *ingress) GetIngressDetail(client *kubernetes.Clientset, IngressName, namespace string) (Ingress *networkingv1.Ingress, err error) {
 	Ingress, err = client.NetworkingV1().Ingresses(namespace).Get(context.TODO(), IngressName, metav1.GetOptions{})
 	if err != nil {
 		logx.Errorf("获取Ingress详情失败%s", err.Error())
@@ -70,7 +72,7 @@ func (d *Ingresses) GetIngressDetail(client *kubernetes.Clientset, IngressName, 
 }
 
 // DeleteIngresses 删除Ingress
-func (d *Ingresses) DeleteIngresses(client *kubernetes.Clientset, IngressName, namespace string) (err error) {
+func (i *ingress) DeleteIngresses(client *kubernetes.Clientset, IngressName, namespace string) (err error) {
 	err = client.NetworkingV1().Ingresses(namespace).Delete(context.TODO(), IngressName, metav1.DeleteOptions{})
 	if err != nil {
 		logx.Errorf("删除Ingress失败%s", err.Error())
@@ -80,7 +82,7 @@ func (d *Ingresses) DeleteIngresses(client *kubernetes.Clientset, IngressName, n
 }
 
 // UpdateIngresses 更新Ingress
-func (d *Ingresses) UpdateIngresses(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (i *ingress) UpdateIngresses(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newIngresses := new(networkingv1.Ingress)
 	err = json.Unmarshal([]byte(content), newIngresses)
 	if err != nil {
@@ -96,7 +98,7 @@ func (d *Ingresses) UpdateIngresses(client *kubernetes.Clientset, namespace, con
 }
 
 // CreateIngresses 创建Ingress
-func (d *Ingresses) CreateIngresses(client *kubernetes.Clientset, namespace, content string) (err error) {
+func (i *ingress) CreateIngresses(client *kubernetes.Clientset, namespace, content string) (err error) {
 	newIngresses := new(networkingv1.Ingress)
 	err = json.Unmarshal([]byte(content), newIngresses)
 	if err != nil {

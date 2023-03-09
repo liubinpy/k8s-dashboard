@@ -32,8 +32,7 @@ func (l *GetNamespaceDetailLogic) GetNamespaceDetail(req *types.GetNamespaceDeta
 		return &types.GetNamespaceDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
 
-	namespace := k8sclient.Namespace{}
-	namespaceDetail, err := namespace.GetNamespaceDetail(client, req.NamespaceName)
+	namespaceDetail, err := k8sclient.NamespaceClient.GetNamespaceDetail(client, req.NamespaceName)
 	if err != nil {
 		return &types.GetNamespaceDetailResponse{Code: response.Failed, Message: err.Error()}, nil
 	}
